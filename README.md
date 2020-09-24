@@ -1,24 +1,27 @@
 # SZE-MOSZE-2020-SeGITseg
-**Beadandó feladat a Modern szoftverfejlesztési eszközök (GKNB_INTM006) nevű tárgyra**<br/>
-Készítették: Boros Dávid (H89ZV9), Káldy Kristóf (R9ZHPM), Kreutzog András (TDM5KG)<br/>
+**Beadandó feladat a Modern szoftverfejlesztési eszközök (GKNB_INTM006) nevű tárgyra**
+
+Készítették: Boros Dávid (H89ZV9), Káldy Kristóf (R9ZHPM), Kreutzog András (TDM5KG)
+
 Széchenyi István Egyetem, 2020/21-as tanév, 1. félév
 
 ## A program működése
 
-A program 6 parancssori paramétert vár, amelyeknek felépítése a következő:<br/>
-`unit1_name unit1_hp unit1_dmg unit2_name unit2_hp unit2_dmg`
+A játékot egy időben 2 karakter játssza, amelyek adatai futáskor JSON típusú fájlokból kerülnek betöltésre. Ha a fájlok nem léteznek, akkor hibaüzenetet ír ki a program. 
+
+A karakterek adatai:
 - name: a karakter neve (string)
 - hp: a karakter életereje (int)
 - dmg: a karakter sebzése (int)
 
-A játékot 2 karakter játssza, amelyek adatai a parancssori paraméterekből kerülnek betöltésre.<br/>
-Amennyiben ez megtörtént megkezdődik a játék. A karakterek felváltva támadják egymást, sebzést okozva a másiknak. Minden körben kiírásra kerül hogy ki támadott kit és a karakterek aktuális állapota.<br/>
-A játéknak akkor van vége, amikor az egyik karakter életereje 0-ra csökken. Ekkor a végeredmény kiírásra kerül és a program leáll.
+Amennyiben a beolvasás megtörtént, megkezdődik a játék. Összesen három karakter van, melyek kettesével, felváltva támadják egymást, sebzést okozva a másiknak. A harcnak akkor van vége, amikor az egyik karakter életereje 0-ra csökken, ezután indul a következő harc, egészen addig amíg az összes lehetséges kombináció le nem fut.
+
+Amikor az unitok egyesével megküzdenek egymással, akkor a program kiírja egy szöveges fájlba (`results.txt`) a harcok kimenetelét.
+
+Végül a `results.txt` fájlt a program összehasonlítja egy `expected_results.txt` fájllal és ha esetleg nem egyeznek meg, akkor jelzi, hogy hiba van a kódban.
 
 ## A program futtatása
 
-A kódot először le kell fordítani:<br/>
-- `g++ -std=c++17 *.cpp`<a/>
+A programot a `test_workflow.yml` workflow futtatja.
 
-A program futtatása példaértékekkel:<br/>
-- `./a.out Maple 150 10 Sally 45 30`
+Ez a kódot először lefordítja `g++ -std=c++17 *.cpp`, majd futtatja a script (`run_test.sh`) segítségével, valamint ellenőrzi, hogy helyesen futott-e le a program `diff test/results.txt test/expected_results.txt`. 
