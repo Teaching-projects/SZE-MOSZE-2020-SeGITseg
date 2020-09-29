@@ -1,21 +1,24 @@
 #include <iostream>
 #include "unit.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-	if (argc != 7)
-	{
-		std::cout << "Too many/few arguments detected!";
+	if (argc != 3) {
+		std::cout << "Too many/few arguments detected!" << std::endl;
 		return 1;
 	}
-	else
-	{
-		Unit A(argv[1], std::stoi(argv[2]), std::stoi(argv[3]));
-		Unit B(argv[4], std::stoi(argv[5]), std::stoi(argv[6]));
+	else {
+		try {
+			Unit A = Unit::parseUnit(argv[1]);
+			Unit B = Unit::parseUnit(argv[2]);
 
-		std::cout << A << B;
-
-		A.fight(B);
+			A.fight(B);
+		}
+		catch (std::runtime_error& e) {
+			std::cout << e.what() << std::endl;
+			return 1;
+		}
 	}
+
 	return 0;
 }

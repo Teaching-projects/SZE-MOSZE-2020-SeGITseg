@@ -1,0 +1,6 @@
+Maple wins. Remaining HP: 30
+Dave wins. Remaining HP: 40
+Sally wins. Remaining HP: 5
+Dave wins. Remaining HP: 40
+Dave wins. Remaining HP: 50
+Dave wins. Remaining HP: 70

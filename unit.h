@@ -2,6 +2,7 @@
 #define UNIT_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 class Unit
@@ -17,6 +18,7 @@ public:
 	int getHp() const;
 	int getDmg() const;
 	void fight(Unit &other);
+	static Unit parseUnit(const std::string fileName);
 	friend std::ostream &operator<<(std::ostream &out, const Unit &u);
 };
 
