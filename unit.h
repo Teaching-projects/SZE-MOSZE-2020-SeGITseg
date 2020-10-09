@@ -12,6 +12,7 @@ private:
 	int hp;
 	const int dmg;
 	const double cd;
+	void attack(Unit &target);
 
 public:
 	Unit(const std::string name, const int hp, const int dmg, const double cd);

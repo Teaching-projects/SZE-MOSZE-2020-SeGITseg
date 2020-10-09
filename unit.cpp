@@ -23,18 +23,45 @@ double Unit::getCd() const
 	return cd;
 }
 
+void Unit::attack(Unit &target)
+{
+	(target.getHp() - dmg > 0) ? target.hp -= dmg : target.hp = 0;
+}
+
 void Unit::fight(Unit &other)
 {
-	while (hp > 0)
+	double time = 0;
+	double attTimeA = cd;
+	double attTimeB = other.getCd();
+
+	attack(other);
+	other.attack(*this);
+
+	(cd <= other.getCd()) ? time = time + cd : time = time + other.getCd();
+
+	while (hp > 0 && other.getHp() > 0)
 	{
-		(other.getHp() - dmg > 0) ? other.hp -= dmg : other.hp = 0;
-
-		if (other.getHp() == 0)
+		if (attTimeA <= time)
 		{
-			break;
+			if (attTimeB < time && attTimeA > attTimeB)
+			{
+				other.attack(*this);
+				time = time + other.getCd();
+				attTimeB = attTimeB + other.getCd();
+			}
+			else
+			{
+				attack(other);
+				time = time + cd;
+				attTimeA = attTimeA + cd;
+			}
 		}
-
-		(hp - other.getDmg() > 0) ? hp -= other.dmg : hp = 0;
+		else
+		{
+			other.attack(*this);
+			time = time + other.getCd();
+			attTimeB = attTimeB + other.getCd();
+		}
 	}
 
 	if (other.getHp() == 0)
