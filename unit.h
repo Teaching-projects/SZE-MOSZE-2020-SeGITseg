@@ -11,6 +11,7 @@ private:
 	const std::string name;
 	int hp;
 	const int dmg;
+	const double cd;
 
 public:
 	Unit(const std::string name, const int hp, const int dmg);
