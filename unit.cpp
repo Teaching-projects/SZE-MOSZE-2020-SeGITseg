@@ -30,37 +30,23 @@ void Unit::attack(Unit &target)
 
 Unit *Unit::fight(Unit &other)
 {
-	double t = 0;
-	double attTimeA = cd;
-	double attTimeB = other.getCd();
-
 	attack(other);
 	other.attack(*this);
 
-	(cd <= other.getCd()) ? t = t + cd : t = t + other.getCd();
+	double timeA = cd;
+	double timeB = other.getCd();
 
 	while (hp > 0 && other.getHp() > 0)
 	{
-		if (attTimeA <= t)
+		if (timeA <= timeB)
 		{
-			if (attTimeB < t && attTimeA > attTimeB)
-			{
-				other.attack(*this);
-				t = t + other.getCd();
-				attTimeB = attTimeB + other.getCd();
-			}
-			else
-			{
-				attack(other);
-				t = t + cd;
-				attTimeA = attTimeA + cd;
-			}
+			attack(other);
+			timeA += cd;
 		}
 		else
 		{
 			other.attack(*this);
-			t = t + other.getCd();
-			attTimeB = attTimeB + other.getCd();
+			timeB += other.getCd();
 		}
 	}
 
