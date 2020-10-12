@@ -92,9 +92,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4c6a785cb618e833e57d99de61dd193c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUnit.html#a4c6a785cb618e833e57d99de61dd193c">getCd</a> () const</td></tr>
 <tr class="memdesc:a4c6a785cb618e833e57d99de61dd193c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a simple getter function for unit attack cooldown.  <a href="#a4c6a785cb618e833e57d99de61dd193c">More...</a><br /></td></tr>
 <tr class="separator:a4c6a785cb618e833e57d99de61dd193c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac57d1fc2fc16aec5c329b8e1e30ca96e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUnit.html#ac57d1fc2fc16aec5c329b8e1e30ca96e">fight</a> (<a class="el" href="classUnit.html">Unit</a> &amp;other)</td></tr>
-<tr class="memdesc:ac57d1fc2fc16aec5c329b8e1e30ca96e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the function where the units fights each other until one of them dies (hp goes to 0).  <a href="#ac57d1fc2fc16aec5c329b8e1e30ca96e">More...</a><br /></td></tr>
-<tr class="separator:ac57d1fc2fc16aec5c329b8e1e30ca96e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16aec8b1fdbe847d4cfff637ee1fae29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUnit.html">Unit</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUnit.html#a16aec8b1fdbe847d4cfff637ee1fae29">fight</a> (<a class="el" href="classUnit.html">Unit</a> &amp;other)</td></tr>
+<tr class="memdesc:a16aec8b1fdbe847d4cfff637ee1fae29"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the function where the units fights each other until one of them dies (hp goes to 0).  <a href="#a16aec8b1fdbe847d4cfff637ee1fae29">More...</a><br /></td></tr>
+<tr class="separator:a16aec8b1fdbe847d4cfff637ee1fae29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -164,14 +164,14 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac57d1fc2fc16aec5c329b8e1e30ca96e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac57d1fc2fc16aec5c329b8e1e30ca96e">&#9670;&nbsp;</a></span>fight()</h2>
+<a id="a16aec8b1fdbe847d4cfff637ee1fae29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16aec8b1fdbe847d4cfff637ee1fae29">&#9670;&nbsp;</a></span>fight()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Unit::fight </td>
+          <td class="memname"><a class="el" href="classUnit.html">Unit</a> * Unit::fight </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUnit.html">Unit</a> &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -181,6 +181,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is the function where the units fights each other until one of them dies (hp goes to 0). </p>
+<dl class="section return"><dt>Returns</dt><dd>It returns the winner unit. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The opponent param. </td></tr>
