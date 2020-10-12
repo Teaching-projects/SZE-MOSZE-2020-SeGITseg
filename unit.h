@@ -3,7 +3,7 @@
 *
 * \brief This is the Unit class, which contains the attributes and methods of the units.
 *
-* \author Kreutzog András (kreutzoga)
+* \author Kreutzog András, Káldy Kristóf, Boros Dávid
 *
 * \version 0.1
 *
