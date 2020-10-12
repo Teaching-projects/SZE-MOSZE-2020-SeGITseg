@@ -63,8 +63,9 @@ public:
 
 	/**
 	 *  \brief This is the function where the units fights each other until one of them dies (hp goes to 0).
+	 *  \return It returns the winner unit.
 	*/
-	void fight(Unit &other /** [in] The opponent param. */);
+	Unit *fight(Unit &other /** [in] The opponent param. */);
 
 	/**
 	 *  \brief  This function inputs the units from files.

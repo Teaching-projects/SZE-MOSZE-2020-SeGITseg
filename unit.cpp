@@ -28,7 +28,7 @@ void Unit::attack(Unit &target)
 	(target.getHp() - dmg > 0) ? target.hp -= dmg : target.hp = 0;
 }
 
-void Unit::fight(Unit &other)
+Unit *Unit::fight(Unit &other)
 {
 	double t = 0;
 	double attTimeA = cd;
@@ -64,13 +64,13 @@ void Unit::fight(Unit &other)
 		}
 	}
 
-	if (other.getHp() == 0)
+	if (hp == 0)
 	{
-		std::cout << name << " wins. Remaining HP: " << hp << std::endl;
+		return &other;
 	}
 	else
 	{
-		std::cout << other.getName() << " wins. Remaining HP: " << other.getHp() << std::endl;
+		return this;
 	}
 }
 
