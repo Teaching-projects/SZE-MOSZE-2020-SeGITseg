@@ -13,6 +13,7 @@ A karakterek adatai:
 - name: a karakter neve (string)
 - hp: a karakter életereje (int)
 - dmg: a karakter sebzése (int)
+- cd: a karakter támadásának sebessége (double)
 
 Amennyiben a beolvasás megtörtént, megkezdődik a játék. Összesen három karakter van, melyek kettesével, felváltva támadják egymást, sebzést okozva a másiknak. A harcnak akkor van vége, amikor az egyik karakter életereje 0-ra csökken, ezután indul a következő harc, egészen addig amíg az összes lehetséges kombináció le nem fut.
 
@@ -25,3 +26,11 @@ Végül a `results.txt` fájlt a program összehasonlítja egy `expected_results
 A programot a `test_workflow.yml` workflow futtatja.
 
 Ez a kódot először lefordítja `g++ -std=c++17 *.cpp`, majd futtatja a script (`run_test.sh`) segítségével, valamint ellenőrzi, hogy helyesen futott-e le a program `diff test/results.txt test/expected_results.txt`. 
+
+A `docs_workflow.yml` workflow a gh-pages branchen tárolja a dokumentációhoz tartozó fájlokat.
+
+## A program dokumentációja
+
+A program doxygen dokumentációja az alábbi linken található:
+
+https://teaching-projects.github.io/SZE-MOSZE-2020-SeGITseg/
