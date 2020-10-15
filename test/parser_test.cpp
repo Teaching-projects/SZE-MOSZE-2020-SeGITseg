@@ -1,4 +1,5 @@
 #include "../jsonparser.h"
+#include <fstream>
 #include <gtest/gtest.h>
 
 TEST(parserTest, test_iStream)
