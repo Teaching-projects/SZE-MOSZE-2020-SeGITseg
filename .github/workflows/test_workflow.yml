@@ -1,9 +1,27 @@
 name: Test Workflow
 
-on:
-  push
+on: push
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install valgrind and cppcheck
+        run: sudo apt install cppcheck valgrind
+      - name: Compile code with g++
+        run: g++ -std=c++17 *.cpp
+      - name: Make test scripts executable
+        run: chmod +x ./cppcheck_test.sh ./memory_test.sh
+      - name: Run cppcheck code analysis
+        run: ./cppcheck_test.sh
+      - name: Artifact logs
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./performance_log.txt
+      - name: Memory test
+        run: ./memory_test.sh
+
   build:
     runs-on: ubuntu-latest
     steps:
