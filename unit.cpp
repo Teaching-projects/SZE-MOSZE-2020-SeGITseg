@@ -1,7 +1,8 @@
 #include "unit.h"
+#include <math.h>
 
-Unit::Unit(const std::string name, const int hp, const int dmg)
-	: name(name), hp(hp), dmg(dmg) {}
+Unit::Unit(const std::string &name, int hp, int dmg)
+	: name(name), hp(hp), maxHP(hp), dmg(dmg), xp(0), lvl(1) {}
 
 std::string Unit::getName() const
 {
@@ -18,26 +19,72 @@ int Unit::getDmg() const
 	return dmg;
 }
 
+int Unit::getLvl() const
+{
+	return lvl;
+}
+
+void Unit::addXp(const int &dmg)
+{
+	xp += dmg;
+	while (xp >= 100)
+	{
+		lvlUp();
+		xp -= 100;
+	}
+}
+
+void Unit::lvlUp()
+{
+	lvl++;
+	maxHP = round(maxHP * 1.1);
+	hp = maxHP;
+	dmg = round(dmg * 1.1);
+}
+
 void Unit::fight(Unit &other)
 {
 	while (hp > 0)
 	{
-		(other.getHp() - dmg > 0) ? other.hp -= dmg : other.hp = 0;
+		if (other.getHp() - dmg > 0)
+		{
+			other.hp -= dmg;
+			addXp(dmg);
+		}
+		else
+		{
+			other.hp = 0;
+			addXp(dmg);
+		}
 
-		if (other.getHp() == 0) { break; }
+		if (other.getHp() == 0)
+		{
+			break;
+		}
 
-		(hp - other.getDmg() > 0) ? hp -= other.dmg : hp = 0;
+		if (hp - other.getDmg() > 0)
+		{
+			hp -= other.dmg;
+			other.addXp(other.dmg);
+		}
+		else
+		{
+			hp = 0;
+			other.addXp(other.dmg);
+		}
 	}
 
-	if (other.getHp() == 0) {
+	if (other.getHp() == 0)
+	{
 		std::cout << name << " wins. Remaining HP: " << hp << std::endl;
 	}
-	else {
+	else
+	{
 		std::cout << other.getName() << " wins. Remaining HP: " << other.getHp() << std::endl;
 	}
 }
 
-Unit Unit::parseUnit(std::string fileName)
+Unit Unit::parseUnit(const std::string &fileName)
 {
 	std::string name;
 	int hp = 0;
@@ -45,25 +92,33 @@ Unit Unit::parseUnit(std::string fileName)
 
 	std::ifstream file("units/" + fileName);
 
-	if (!file.fail() && file.is_open()) {
+	if (!file.fail() && file.is_open())
+	{
 		std::string line;
-		while (std::getline(file, line)) {
+		while (std::getline(file, line))
+		{
 			int startPos = line.find_first_of(":") + 2;
 
-			if (line.find("name") != std::string::npos) {
+			if (line.find("name") != std::string::npos)
+			{
 				name = line.substr(startPos + 1, line.length() - (startPos + 3));
 			}
-			else if (line.find("hp") != std::string::npos) {
+			else if (line.find("hp") != std::string::npos)
+			{
 				hp = std::stoi(line.substr(startPos, line.length() - (startPos + 1)));
 			}
-			else if (line.find("dmg") != std::string::npos) {
+			else if (line.find("dmg") != std::string::npos)
+			{
 				dmg = std::stoi(line.substr(startPos, line.length() - startPos));
 			}
 		}
 	}
-	else {
+	else
+	{
 		throw std::runtime_error("Error while opening the file: " + fileName);
 	}
+
+	file.close();
 
 	return Unit(name, hp, dmg);
 }
