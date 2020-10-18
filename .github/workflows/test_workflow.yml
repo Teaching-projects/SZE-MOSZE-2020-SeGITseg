@@ -10,7 +10,7 @@ jobs:
       - name: Install valgrind and cppcheck
         run: sudo apt install cppcheck valgrind
       - name: Compile code with g++
-        run: g++ -std=c++17 *.cpp
+        run: g++ -std=c++17 *.cpp -Wall -Wextra
       - name: Make test scripts executable
         run: chmod +x ./cppcheck_test.sh ./memory_test.sh
       - name: Run cppcheck code analysis
