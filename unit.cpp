@@ -1,5 +1,5 @@
 #include "unit.h"
-#include <cmath>
+#include <math.h>
 
 Unit::Unit(const std::string &name, int hp, int dmg)
 	: name(name), hp(hp), maxHP(hp), dmg(dmg), xp(0), lvl(1) {}
@@ -53,8 +53,8 @@ void Unit::fight(Unit &other)
 		}
 		else
 		{
-			addXp(other.hp);
 			other.hp = 0;
+			addXp(dmg);
 		}
 
 		if (other.getHp() == 0)
@@ -69,8 +69,8 @@ void Unit::fight(Unit &other)
 		}
 		else
 		{
-			other.addXp(hp);
 			hp = 0;
+			other.addXp(other.dmg);
 		}
 	}
 
