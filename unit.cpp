@@ -42,7 +42,7 @@ Unit Unit::parseUnit(std::string fileName)
 {
 	std::string name;
 	int hp, dmg;
-	std::map<std::string, std::string> unitData = JSONParser::Parse(fileName);
+	std::map<std::string, std::string> unitData = JSONParser::ParseFile(fileName);
 	try {
 		name = unitData.at("name");
 		hp = std::stoi(unitData.at("hp"));

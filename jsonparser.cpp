@@ -40,12 +40,12 @@ std::string JSONParser::getData(const std::string &line)
     throw std::runtime_error("Invalid data format: " + line);
 }
 
-std::map<std::string, std::string> JSONParser::Parse(std::istream &iStream)
+std::map<std::string, std::string> JSONParser::ParseStream(std::istream &inputStream)
 {
     std::map<std::string, std::string> parsedData;
     std::string line;
 
-    while (std::getline(iStream, line)) {
+    while (std::getline(inputStream, line)) {
         if (line.find(":") != std::string::npos) {
             if (line.back() == ',') { line.pop_back(); }
 
@@ -65,14 +65,19 @@ std::map<std::string, std::string> JSONParser::Parse(std::istream &iStream)
     return parsedData;
 }
 
-std::map<std::string, std::string> JSONParser::Parse(const std::string &iString)
+std::map<std::string, std::string> JSONParser::ParseString(const std::string &inputString)
 {
-    std::ifstream fileStream(iString);
+    std::istringstream stringStream(inputString);
+    return ParseStream(stringStream);
+}
+
+std::map<std::string, std::string> JSONParser::ParseFile(const std::string &fileName)
+{
+    std::ifstream fileStream(fileName);
 
     if (fileStream.good() && fileStream.is_open()) {
-        return Parse(fileStream);
+        return ParseStream(fileStream);
     }
 
-    std::istringstream stringStream(iString);
-    return Parse(stringStream);
+    throw std::runtime_error("Error while opening file: " + fileName);
 }
