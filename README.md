@@ -11,8 +11,11 @@ A játékot egy időben 2 karakter játssza, amelyek adatai futáskor JSON típu
 
 A karakterek adatai:
 - name: a karakter neve (string)
-- hp: a karakter életereje (int)
+- hp: a karakter jelenlegi életereje (int)
+- maxHp: a karakter maximális életereje (int)
 - dmg: a karakter sebzése (int)
+- cd: a karakter támadásának sebessége (double)
+- xp: a karakter xp pontjai az adott körben (int)
 - lvl: a karakter szintje (int)
 
 Amennyiben a beolvasás megtörtént, megkezdődik a játék. Összesen három karakter van, melyek kettesével, felváltva támadják egymást, sebzést okozva a másiknak. A harcnak akkor van vége, amikor az egyik karakter életereje 0-ra csökken, ezután indul a következő harc, egészen addig amíg az összes lehetséges kombináció le nem fut. Ha legalább 100-as ütést bevisz az egyik unit a másiknak, akkor szintlépés történik. Ilyenkor megnő a unit hp-ja és sebzése 10%-al, valamint feltölti az életerejét a maximumra.
@@ -31,3 +34,11 @@ Ez a kódot először ellenőrzi errorok, warningok, performance és style hibá
 Végul a performance és style log-ot (`performance_log.txt`) artifactolja githubon. 
 
 Ezután a kódot lefordítja a `g++ -std=c++17 *.cpp`, majd futtatja a script (`run_test.sh`) segítségével, valamint ellenőrzi, hogy helyesen futott-e le a program `diff test/results.txt test/expected_results.txt`. 
+
+A `docs_workflow.yml` workflow a gh-pages branchen tárolja a dokumentációhoz tartozó fájlokat.
+
+## A program dokumentációja
+
+A program doxygen dokumentációja az alábbi linken található:
+
+https://teaching-projects.github.io/SZE-MOSZE-2020-SeGITseg/

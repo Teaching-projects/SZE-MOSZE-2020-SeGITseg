@@ -1,6 +1,6 @@
 Maple wins. Remaining HP: 190
 Maple wins. Remaining HP: 220
 Maple wins. Remaining HP: 190
-Dave wins. Remaining HP: 112
+Sally wins. Remaining HP: 154
 Maple wins. Remaining HP: 220
-Dave wins. Remaining HP: 102
+Dave wins. Remaining HP: 132

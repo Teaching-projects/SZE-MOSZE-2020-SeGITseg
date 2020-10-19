@@ -1,8 +1,8 @@
 #include "unit.h"
 #include <cmath>
 
-Unit::Unit(const std::string &name, int hp, int dmg)
-	: name(name), hp(hp), maxHP(hp), dmg(dmg), xp(0), lvl(1) {}
+Unit::Unit(const std::string &name, int hp, int dmg, const double &cd)
+	: name(name), hp(hp), dmg(dmg), cd(cd), maxHP(hp), xp(0), lvl(1) {}
 
 std::string Unit::getName() const
 {
@@ -19,9 +19,19 @@ int Unit::getDmg() const
 	return dmg;
 }
 
+double Unit::getCd() const
+{
+	return cd;
+}
+
 int Unit::getLvl() const
 {
 	return lvl;
+}
+
+void Unit::attack(Unit &target)
+{
+	(target.getHp() - dmg > 0) ? target.hp -= dmg : target.hp = 0;
 }
 
 void Unit::addXp(const int &dmg)
@@ -42,45 +52,39 @@ void Unit::lvlUp()
 	dmg = round(dmg * 1.1);
 }
 
-void Unit::fight(Unit &other)
+Unit *Unit::fight(Unit &other)
 {
-	while (hp > 0)
+	attack(other);
+	addXp(dmg);
+	other.attack(*this);
+	other.addXp(other.dmg);
+
+	double timeA = cd;
+	double timeB = other.getCd();
+
+	while (hp > 0 && other.getHp() > 0)
 	{
-		if (other.getHp() - dmg > 0)
+		if (timeA <= timeB)
 		{
-			other.hp -= dmg;
-			addXp(dmg);
+			(other.hp - dmg > 0) ? addXp(dmg) : addXp(other.hp);
+			attack(other);
+			timeA += cd;
 		}
 		else
 		{
-			addXp(other.hp);
-			other.hp = 0;
-		}
-
-		if (other.getHp() == 0)
-		{
-			break;
-		}
-
-		if (hp - other.getDmg() > 0)
-		{
-			hp -= other.dmg;
-			other.addXp(other.dmg);
-		}
-		else
-		{
-			other.addXp(hp);
-			hp = 0;
+			(hp - other.dmg > 0) ? other.addXp(other.dmg) : other.addXp(hp);
+			other.attack(*this);
+			timeB += other.getCd();
 		}
 	}
 
-	if (other.getHp() == 0)
+	if (hp == 0)
 	{
-		std::cout << name << " wins. Remaining HP: " << hp << std::endl;
+		return &other;
 	}
 	else
 	{
-		std::cout << other.getName() << " wins. Remaining HP: " << other.getHp() << std::endl;
+		return this;
 	}
 }
 
@@ -89,6 +93,7 @@ Unit Unit::parseUnit(const std::string &fileName)
 	std::string name;
 	int hp = 0;
 	int dmg = 0;
+	double cd = 0;
 
 	std::ifstream file("units/" + fileName);
 
@@ -111,6 +116,10 @@ Unit Unit::parseUnit(const std::string &fileName)
 			{
 				dmg = std::stoi(line.substr(startPos, line.length() - startPos));
 			}
+			else if (line.find("cd") != std::string::npos)
+			{
+				cd = std::stod(line.substr(startPos, line.length() - startPos));
+			}
 		}
 	}
 	else
@@ -118,12 +127,10 @@ Unit Unit::parseUnit(const std::string &fileName)
 		throw std::runtime_error("Error while opening the file: " + fileName);
 	}
 
-	file.close();
-
-	return Unit(name, hp, dmg);
+	return Unit(name, hp, dmg, cd);
 }
 
 std::ostream &operator<<(std::ostream &out, const Unit &u)
 {
-	return out << u.getName() << ": HP: " << u.getHp() << ", DMG: " << u.getDmg() << "\n";
+	return out << u.getName() << ": HP: " << u.getHp() << ", DMG: " << u.getDmg() << ", CD: " << u.getCd() << "\n";
 }
