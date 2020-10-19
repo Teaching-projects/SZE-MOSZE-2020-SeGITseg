@@ -35,7 +35,7 @@ TEST(parserTest, test_iString)
 TEST(parserTest, test_invalidInput)
 {
     std::ifstream invalidInput("units/invalid_unit.json");
-    ASSERT_THROW(JSONParser::ParseFile(invalidInput), std::runtime_error)
+    ASSERT_THROW(JSONParser::ParseStream(invalidInput), std::runtime_error)
 }
 
 int main(int argc, char **argv)
