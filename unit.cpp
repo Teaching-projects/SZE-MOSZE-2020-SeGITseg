@@ -31,7 +31,17 @@ int Unit::getLvl() const
 
 void Unit::attack(Unit &target)
 {
-	(target.getHp() - dmg > 0) ? target.hp -= dmg : target.hp = 0;
+	if (target.getHp() - dmg > 0)
+	{
+		target.hp -= dmg;
+		addXp(dmg);
+	}
+	else
+	{
+		int tmpHp = target.hp;
+		target.hp = 0;
+		addXp(tmpHp);
+	}
 }
 
 void Unit::addXp(const int &dmg)
@@ -55,9 +65,8 @@ void Unit::lvlUp()
 Unit *Unit::fight(Unit &other)
 {
 	attack(other);
-	addXp(dmg);
-	other.attack(*this);
-	other.addXp(other.dmg);
+	if (other.getHp() > 0)
+		other.attack(*this);
 
 	double timeA = cd;
 	double timeB = other.getCd();
@@ -66,13 +75,11 @@ Unit *Unit::fight(Unit &other)
 	{
 		if (timeA <= timeB)
 		{
-			(other.hp - dmg > 0) ? addXp(dmg) : addXp(other.hp);
 			attack(other);
 			timeA += cd;
 		}
 		else
 		{
-			(hp - other.dmg > 0) ? other.addXp(other.dmg) : other.addXp(hp);
 			other.attack(*this);
 			timeB += other.getCd();
 		}
