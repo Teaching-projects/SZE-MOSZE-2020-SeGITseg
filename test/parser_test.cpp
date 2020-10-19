@@ -9,7 +9,7 @@ TEST(parserTest, test_iStream)
         {"name", "Sally"},
         {"hp", "45"},
         {"dmg", "30"}};
-    std::map<std::string, std::string> data = JSONParser::Parse(iStream);
+    std::map<std::string, std::string> data = JSONParser::ParseStream(iStream);
 
     for (auto e : expectedData)
     {
@@ -24,7 +24,7 @@ TEST(parserTest, test_iString)
         {"name", "Maple"},
         {"hp", "150"},
         {"dmg", "10"}};
-    std::map<std::string, std::string> data = JSONParser::Parse(iString);
+    std::map<std::string, std::string> data = JSONParser::ParseFile(iString);
 
     for (auto e : expectedData)
     {
@@ -34,17 +34,8 @@ TEST(parserTest, test_iString)
 
 TEST(parserTest, test_invalidInput)
 {
-    const std::string expectedError = "Invalid key: nev";
     std::ifstream invalidInput("units/invalid_unit.json");
-    try
-    {
-        std::map<std::string, std::string> data = JSONParser::Parse(invalidInput);
-        FAIL() << "Expected std::runtime_error";
-    }
-    catch (std::runtime_error &e)
-    {
-        ASSERT_EQ(e.what(), expectedError);
-    }
+    ASSERT_THROW(JSONParser::ParseFile(invalidInput), std::runtime_error)
 }
 
 int main(int argc, char **argv)
