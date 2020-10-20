@@ -23,15 +23,22 @@ class Unit
 {
 private:
 	const std::string name; ///< The name of the unit.
-	int hp;					///< The health points of the unit.
-	const int dmg;			///< The damage of the unit.
+	int hp;					///< The current health points of the unit.
+	int dmg;				///< The damage of the unit.
 	const double cd;		///< The attack cooldown of the unit (in seconds).
+	int maxHP;				///< The maximal health points of the unit.
+	int xp;					///< The xp of the unit.
+	int lvl;				///< The level of the unit.
+
+	void lvlUp(); ///< Function to level up the unit.
+	/// This private function adds xp to the unit when doing damage.
+	void addXp(const int &dmg /** [in] The damage param. */);
 	/// This private function does a single attack against a target unit.
 	void attack(Unit &target /** [in] The target param. */);
 
 public:
 	/// This is the constructor for the Unit class.
-	Unit(const std::string name, const int hp, const int dmg, const double cd /** [in] The name, health, damage and cooldown of the unit. */);
+	Unit(const std::string &name, int hp, int dmg, const double &cd /** [in] The name, health, damage and cooldown of the unit. */);
 
 	/**
 	 *  \brief This is a simple getter function for unit name.
@@ -62,6 +69,13 @@ public:
 	double getCd() const;
 
 	/**
+	 *  \brief This is a simple getter function for unit level.
+	 * 	\param none
+	 *  \return Returns the unit level.
+	*/
+	int getLvl() const;
+
+	/**
 	 *  \brief This is the function where the units fights each other until one of them dies (hp goes to 0).
 	 *  \return It returns the winner unit.
 	*/
@@ -71,7 +85,7 @@ public:
 	 *  \brief  This function inputs the units from files.
 	 *  \return It returns the unit name, hp, damage and cooldown.
 	*/
-	static Unit parseUnit(const std::string fileName /** [in] The name of the input file. */);
+	static Unit parseUnit(const std::string &fileName /** [in] The name of the input file. */);
 
 	/**
 	 *  \brief This is an output operator, used to output the unit's attributes.

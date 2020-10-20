@@ -1,7 +1,8 @@
 #include "unit.h"
+#include <cmath>
 
-Unit::Unit(const std::string name, const int hp, const int dmg, const double cd)
-	: name(name), hp(hp), dmg(dmg), cd(cd) {}
+Unit::Unit(const std::string &name, int hp, int dmg, const double &cd)
+	: name(name), hp(hp), dmg(dmg), cd(cd), maxHP(hp), xp(0), lvl(1) {}
 
 std::string Unit::getName() const
 {
@@ -23,15 +24,49 @@ double Unit::getCd() const
 	return cd;
 }
 
+int Unit::getLvl() const
+{
+	return lvl;
+}
+
 void Unit::attack(Unit &target)
 {
-	(target.getHp() - dmg > 0) ? target.hp -= dmg : target.hp = 0;
+	if (target.getHp() - dmg > 0)
+	{
+		target.hp -= dmg;
+		addXp(dmg);
+	}
+	else
+	{
+		int tmpHp = target.hp;
+		target.hp = 0;
+		addXp(tmpHp);
+	}
+}
+
+void Unit::addXp(const int &dmg)
+{
+	xp += dmg;
+	while (xp >= 100)
+	{
+		lvlUp();
+		xp -= 100;
+	}
+}
+
+void Unit::lvlUp()
+{
+	lvl++;
+	maxHP = round(maxHP * 1.1);
+	hp = maxHP;
+	dmg = round(dmg * 1.1);
 }
 
 Unit *Unit::fight(Unit &other)
 {
 	attack(other);
-	other.attack(*this);
+	if (other.getHp() > 0)
+		other.attack(*this);
 
 	double timeA = cd;
 	double timeB = other.getCd();
@@ -60,7 +95,7 @@ Unit *Unit::fight(Unit &other)
 	}
 }
 
-Unit Unit::parseUnit(std::string fileName)
+Unit Unit::parseUnit(const std::string &fileName)
 {
 	std::string name;
 	int hp = 0;
