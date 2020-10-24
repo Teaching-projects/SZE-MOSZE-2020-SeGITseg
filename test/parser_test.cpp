@@ -7,8 +7,9 @@ TEST(parserTest, test_iStream)
     std::ifstream iStream("units/unit_2.json");
     std::map<std::string, std::string> expectedData{
         {"name", "Sally"},
-        {"hp", "45"},
-        {"dmg", "30"}};
+        {"hp", "140"},
+        {"dmg", "30"},
+        {"cd", "1.5"}};
     std::map<std::string, std::string> data = JSONParser::ParseStream(iStream);
 
     for (auto e : expectedData)
@@ -22,8 +23,9 @@ TEST(parserTest, test_iString)
     std::string iString = "units/unit_1.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Maple"},
-        {"hp", "150"},
-        {"dmg", "10"}};
+        {"hp", "200"},
+        {"dmg", "60"},
+        {"cd", "2"}};
     std::map<std::string, std::string> data = JSONParser::ParseFile(iString);
 
     for (auto e : expectedData)
