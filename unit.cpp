@@ -100,11 +100,13 @@ Unit Unit::parseUnit(const std::string &fileName)
 {
 	std::string name;
 	int hp, dmg;
+	double cd;
 	std::map<std::string, std::string> unitData = JSONParser::ParseFile(fileName);
 	try {
 		name = unitData.at("name");
 		hp = std::stoi(unitData.at("hp"));
 		dmg = std::stoi(unitData.at("dmg"));
+		cd = std::stod(unitData.at("cd"));
 	}
 	catch (const std::out_of_range &oor) {
 		throw std::runtime_error("Missing data: " + (std::string)oor.what());

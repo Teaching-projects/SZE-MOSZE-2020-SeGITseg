@@ -51,7 +51,7 @@ std::map<std::string, std::string> JSONParser::ParseStream(std::istream &inputSt
 
             std::string key = getData(line.substr(0, line.find(":")));
 
-            std::vector<std::string> validKeys{"name", "hp", "dmg"};
+            std::vector<std::string> validKeys{"name", "hp", "dmg", "cd"};
             if (std::find(std::begin(validKeys), std::end(validKeys), key) == std::end(validKeys)) {
                 throw std::runtime_error("Invalid key: " + key);
             }
