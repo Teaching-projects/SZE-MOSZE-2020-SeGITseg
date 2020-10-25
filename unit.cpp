@@ -1,4 +1,5 @@
 #include "unit.h"
+#include "jsonparser.h"
 #include <cmath>
 
 Unit::Unit(const std::string &name, int hp, int dmg, const double &cd)
@@ -98,40 +99,17 @@ Unit *Unit::fight(Unit &other)
 Unit Unit::parseUnit(const std::string &fileName)
 {
 	std::string name;
-	int hp = 0;
-	int dmg = 0;
-	double cd = 0;
-
-	std::ifstream file("units/" + fileName);
-
-	if (!file.fail() && file.is_open())
-	{
-		std::string line;
-		while (std::getline(file, line))
-		{
-			int startPos = line.find_first_of(":") + 2;
-
-			if (line.find("name") != std::string::npos)
-			{
-				name = line.substr(startPos + 1, line.length() - (startPos + 3));
-			}
-			else if (line.find("hp") != std::string::npos)
-			{
-				hp = std::stoi(line.substr(startPos, line.length() - (startPos + 1)));
-			}
-			else if (line.find("dmg") != std::string::npos)
-			{
-				dmg = std::stoi(line.substr(startPos, line.length() - startPos));
-			}
-			else if (line.find("cd") != std::string::npos)
-			{
-				cd = std::stod(line.substr(startPos, line.length() - startPos));
-			}
-		}
+	int hp, dmg;
+	double cd;
+	std::map<std::string, std::string> unitData = JSONParser::ParseFile(fileName);
+	try {
+		name = unitData.at("name");
+		hp = std::stoi(unitData.at("hp"));
+		dmg = std::stoi(unitData.at("dmg"));
+		cd = std::stod(unitData.at("cd"));
 	}
-	else
-	{
-		throw std::runtime_error("Error while opening the file: " + fileName);
+	catch (const std::out_of_range &oor) {
+		throw std::runtime_error("Missing data: " + (std::string)oor.what());
 	}
 
 	return Unit(name, hp, dmg, cd);
