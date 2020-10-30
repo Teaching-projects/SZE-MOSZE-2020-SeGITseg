@@ -70,15 +70,19 @@ $(function() {
 <p>A játékot egy időben 2 karakter játssza, amelyek adatai futáskor JSON típusú fájlokból kerülnek betöltésre. Ha a fájlok nem léteznek, akkor hibaüzenetet ír ki a program.</p>
 <p>A karakterek adatai:</p><ul>
 <li>name: a karakter neve (string)</li>
-<li>hp: a karakter életereje (int)</li>
+<li>hp: a karakter jelenlegi életereje (int)</li>
+<li>maxHp: a karakter maximális életereje (int)</li>
 <li>dmg: a karakter sebzése (int)</li>
 <li>cd: a karakter támadásának sebessége (double)</li>
+<li>xp: a karakter xp pontjai az adott körben (int)</li>
+<li>lvl: a karakter szintje (int)</li>
 </ul>
-<p>Amennyiben a beolvasás megtörtént, megkezdődik a játék. Összesen három karakter van, melyek kettesével, felváltva támadják egymást, sebzést okozva a másiknak. A harcnak akkor van vége, amikor az egyik karakter életereje 0-ra csökken, ezután indul a következő harc, egészen addig amíg az összes lehetséges kombináció le nem fut.</p>
+<p>Amennyiben a beolvasás megtörtént, megkezdődik a játék. Összesen három karakter van, melyek kettesével, felváltva támadják egymást, sebzést okozva a másiknak. A harcnak akkor van vége, amikor az egyik karakter életereje 0-ra csökken, ezután indul a következő harc, egészen addig amíg az összes lehetséges kombináció le nem fut. Ha legalább 100-as ütést bevisz az egyik unit a másiknak, akkor szintlépés történik. Ilyenkor megnő a unit hp-ja és sebzése 10%-al, valamint feltölti az életerejét a maximumra.</p>
 <p>Amikor az unitok egyesével megküzdenek egymással, akkor a program kiírja egy szöveges fájlba (<code>results.txt</code>) a harcok kimenetelét.</p>
 <p>Végül a <code>results.txt</code> fájlt a program összehasonlítja egy <code>expected_results.txt</code> fájllal és ha esetleg nem egyeznek meg, akkor jelzi, hogy hiba van a kódban.</p>
 <p>A programot a <code>test_workflow.yml</code> workflow futtatja.</p>
-<p>Ez a kódot először lefordítja <code>g++ -std=c++17 *.cpp</code>, majd futtatja a script (<code>run_test.sh</code>) segítségével, valamint ellenőrzi, hogy helyesen futott-e le a program <code>diff test/results.txt test/expected_results.txt</code>.</p>
+<p>Ez a kódot először ellenőrzi errorok, warningok, performance és style hibák, valamint memóriahibák után kutatva cppcheck valamint valgrind segítségével. <code>cppcheck_test.sh</code> <code>memory_test.sh</code> Végul a performance és style log-ot (<code>performance_log.txt</code>) artifactolja githubon.</p>
+<p>Ezután a kódot lefordítja a <code>g++ -std=c++17 *.cpp</code>, majd futtatja a script (<code>run_test.sh</code>) segítségével, valamint ellenőrzi, hogy helyesen futott-e le a program <code>diff test/results.txt test/expected_results.txt</code>.</p>
 <p>A <code>docs_workflow.yml</code> workflow a gh-pages branchen tárolja a dokumentációhoz tartozó fájlokat.</p>
 <p>A program doxygen dokumentációja az alábbi linken található:</p>
 <p><a href="https://teaching-projects.github.io/SZE-MOSZE-2020-SeGITseg/">https://teaching-projects.github.io/SZE-MOSZE-2020-SeGITseg/</a> </p>
