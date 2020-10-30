@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jsonparser',['JSONParser',['../classJSONParser.html',1,'']]]
+  ['jsonparser',['JSONParser',['../classJSONParser.html',1,'JSONParser'],['../classJsonparser.html',1,'Jsonparser']]]
 ];
