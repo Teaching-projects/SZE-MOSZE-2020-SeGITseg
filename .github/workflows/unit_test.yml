@@ -1,8 +1,6 @@
 name: Unit test for JSON parser
 
-on: 
-  push:
-      branches: [jsonparser]
+on: push
 
 jobs:
   build:
