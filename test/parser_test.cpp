@@ -34,6 +34,22 @@ TEST(parserTest, test_iString)
     }
 }
 
+TEST(parserTest, test_whitespaces)
+{
+    std::string fileName = "units/test/units/valid_unit_1.json";
+    std::map<std::string, std::string> expectedData{
+        {"name", "Valid Unit #1"},
+        {"hp", "100"},
+        {"dmg", "20"},
+        {"cd", "1"}};
+    std::map<std::string, std::string> data = JSONParser::ParseFile(fileName);
+
+    for (auto e : expectedData)
+    {
+        ASSERT_EQ(data[e.first], e.second);
+    }
+}
+
 TEST(parserTest, test_invalidKey)
 {
     const std::string expectedErrorMsg = "Invalid key: nev";
