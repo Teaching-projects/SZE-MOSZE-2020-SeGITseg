@@ -34,21 +34,38 @@ TEST(parserTest, test_iString)
     }
 }
 
-TEST(parserTest, test_invalidInput)
+TEST(parserTest, test_invalidKey)
 {
-    std::ifstream invalidInput("units/invalid_units/invalid_unit_1.json");
-    ASSERT_THROW(JSONParser::ParseStream(invalidInput), std::runtime_error);
-}
-
-TEST(parserTest, test_asd)
-{
-    const std::string expectedErrorMsg = "Invalid data format:  \"20,";
-    std::ifstream invalidInput("units/invalid_units/invalid_unit_2.json");
+    const std::string expectedErrorMsg = "Invalid key: nev";
+    std::ifstream invalidInput("units/test_units/invalid_unit_1.json");
     try {
         std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
     }
-    catch (std::runtime_error &e)	
-    {	
+    catch (std::runtime_error &e) {
+        ASSERT_EQ(e.what(), expectedErrorMsg);
+    }
+}
+
+TEST(parserTest, test_invalidDataFormat)
+{
+    const std::string expectedErrorMsg = "Invalid data format:  \"20,";
+    std::ifstream invalidInput("units/test_units/invalid_unit_2.json");
+    try {
+        std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
+    }
+    catch (std::runtime_error &e) {	
+        ASSERT_EQ(e.what(), expectedErrorMsg);	
+    }
+}
+
+TEST(parserTest, test_invalidDataType)
+{
+    const std::string expectedErrorMsg = "Invalid data type:  \"1.0.1\"";
+    std::ifstream invalidInput("units/test_units/invalid_unit_3.json");
+    try {
+        std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
+    }
+    catch (std::runtime_error &e) {	
         ASSERT_EQ(e.what(), expectedErrorMsg);	
     }
 }
