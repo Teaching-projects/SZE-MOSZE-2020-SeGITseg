@@ -36,7 +36,7 @@ TEST(parserTest, test_iString)
 
 TEST(parserTest, test_whitespaces)
 {
-    std::string fileName = "units/test/units/valid_unit_1.json";
+    std::string fileName = "units/test_units/valid_unit_1.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Valid Unit #1"},
         {"hp", "100"},
