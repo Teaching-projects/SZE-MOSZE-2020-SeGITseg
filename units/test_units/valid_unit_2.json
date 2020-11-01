@@ -1,7 +1,7 @@
 {
     "hp" : 200,
     "name" : "Valid Unit #2",
-    "cd" : 2,
+    "cd" : 1,
     "dmg" : 60
   }
   
