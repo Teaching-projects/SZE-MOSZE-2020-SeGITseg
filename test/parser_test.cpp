@@ -48,7 +48,7 @@ TEST(parserTest, test_invalidKey)
 
 TEST(parserTest, test_invalidDataFormat)
 {
-    const std::string expectedErrorMsg = "Invalid data format:  \"20,";
+    const std::string expectedErrorMsg = "Invalid data format:  \"20";
     std::ifstream invalidInput("units/test_units/invalid_unit_2.json");
     try {
         std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
