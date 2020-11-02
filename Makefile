@@ -26,6 +26,7 @@ run_unit_tests:
 	cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make
 	sudo ln -st /usr/lib/ /usr/src/gtest/libgtest.a
 	sudo ln -st /usr/lib/ /usr/src/gtest/libgtest_main.a
+	$(CC) $(CFLAGS) -o game $(OBJS)
 	cd test && cmake CMakeLists.txt && make && ./unitTests
 
 io-diff-tests:
@@ -37,4 +38,4 @@ documentation:
 	doxygen doxconf
 
 clean:
-	rm -rf *.o add ./DOCS
+	rm -rf *.out *.o game ./DOCS
