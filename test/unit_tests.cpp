@@ -108,7 +108,7 @@ TEST(unitTests, test_invalidDataType)
 TEST(unitTests, test_fight)
 {
     Unit A = Unit::parseUnit("units/unit_1.json");
-    Unit B = Unit::parseUnit("Units/unit_2.json");
+    Unit B = Unit::parseUnit("units/unit_2.json");
 
     A.fight(B);
 
