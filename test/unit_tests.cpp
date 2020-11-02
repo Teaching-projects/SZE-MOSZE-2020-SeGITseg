@@ -105,6 +105,18 @@ TEST(unitTests, test_invalidDataType)
     }
 }
 
+TEST(unitTests, test_missingJSON)
+{
+    const std::string expectedErrorMsg = "Error while opening file: missingJSON.json";
+    std::ifstream missingFile("missingJSON.json");
+    try {
+        std::map<std::string, std::string> data = JSONParser::ParseStream(missingFile);
+    }
+    catch (std::runtime_error &e) {	
+        ASSERT_EQ(e.what(), expectedErrorMsg);	
+    }
+}
+
 TEST(unitTests, test_fight)
 {
     Unit A = Unit::parseUnit("units/unit_1.json");
