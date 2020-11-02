@@ -1,8 +1,11 @@
 #include "../jsonparser.h"
+#include "../unit.h"
 #include <fstream>
+#include <cmath>
+
 #include <gtest/gtest.h>
 
-TEST(parserTest, test_iStream)
+TEST(unitTests, test_iStream)
 {
     std::ifstream iStream("units/unit_2.json");
     std::map<std::string, std::string> expectedData{
@@ -18,7 +21,7 @@ TEST(parserTest, test_iStream)
     }
 }
 
-TEST(parserTest, test_iString)
+TEST(unitTests, test_iString)
 {
     std::string iString = "units/unit_1.json";
     std::map<std::string, std::string> expectedData{
@@ -34,7 +37,7 @@ TEST(parserTest, test_iString)
     }
 }
 
-TEST(parserTest, test_whitespaces)
+TEST(unitTests, test_whitespaces)
 {
     std::string fileName = "units/test_units/valid_unit_1.json";
     std::map<std::string, std::string> expectedData{
@@ -50,7 +53,7 @@ TEST(parserTest, test_whitespaces)
     }
 }
 
-TEST(parserTest, test_changedJSONorder)
+TEST(unitTests, test_changedJSONorder)
 {
     std::string fileName = "units/test_units/valid_unit_2.json";
     std::map<std::string, std::string> expectedData{
@@ -66,7 +69,7 @@ TEST(parserTest, test_changedJSONorder)
     }
 }
 
-TEST(parserTest, test_invalidKey)
+TEST(unitTests, test_invalidKey)
 {
     const std::string expectedErrorMsg = "Invalid key: nev";
     std::ifstream invalidInput("units/test_units/invalid_unit_1.json");
@@ -78,7 +81,7 @@ TEST(parserTest, test_invalidKey)
     }
 }
 
-TEST(parserTest, test_invalidDataFormat)
+TEST(unitTests, test_invalidDataFormat)
 {
     const std::string expectedErrorMsg = "Invalid data format:  \"20";
     std::ifstream invalidInput("units/test_units/invalid_unit_2.json");
@@ -90,7 +93,7 @@ TEST(parserTest, test_invalidDataFormat)
     }
 }
 
-TEST(parserTest, test_invalidDataType)
+TEST(unitTests, test_invalidDataType)
 {
     const std::string expectedErrorMsg = "Invalid data type:  \"1.0.1\"";
     std::ifstream invalidInput("units/test_units/invalid_unit_3.json");
@@ -100,6 +103,41 @@ TEST(parserTest, test_invalidDataType)
     catch (std::runtime_error &e) {	
         ASSERT_EQ(e.what(), expectedErrorMsg);	
     }
+}
+
+TEST(unitTests, test_fight)
+{
+    Unit A = Unit::parseUnit("units/unit_1.json");
+    Unit B = Unit::parseUnit("Units/unit_2.json");
+
+    A.fight(B);
+
+    ASSERT_TRUE(A.getHp() == 0 || B.getHp() == 0);
+}
+
+TEST(unitTests, test_level)
+{
+    Unit A = Unit::parseUnit("units/unit_1.json");
+    Unit B = Unit::parseUnit("units/unit_2.json");
+
+    A.fight(B);
+
+    ASSERT_EQ(A.getLvl(), 2);
+    ASSERT_EQ(B.getLvl(), 1);
+}
+
+TEST(unitTests, test_levelUpStats)
+{
+    Unit A = Unit::parseUnit("units/unit_1.json");
+    Unit B = Unit::parseUnit("units/unit_3.json");
+
+    int expectedDmg = round(A.getDmg() * 1.1);
+    int expectedHp = round(A.getHp() * 1.1);
+
+    A.fight(B);
+
+    ASSERT_EQ(A.getDmg(), expectedDmg);
+    ASSERT_EQ(A.getHp(), expectedHp);
 }
 
 int main(int argc, char **argv)
