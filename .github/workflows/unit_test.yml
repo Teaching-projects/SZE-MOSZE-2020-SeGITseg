@@ -20,4 +20,4 @@ jobs:
       - name: Build test
         run: cd test && make
       - name: Run test
-        run: test/parserTest
+        run: test/unitTests
