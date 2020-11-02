@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IFS=$'\n'
-command="$(valgrind --leak-check=yes --log-file=memorytest_log.txt game run_test.sh)"
+command="$(valgrind --leak-check=yes --log-file=memorytest_log.txt ./game run_test.sh)"
 
 result="$(cat ./memorytest_log.txt)"
 
