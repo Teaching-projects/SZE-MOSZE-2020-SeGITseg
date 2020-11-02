@@ -7,7 +7,7 @@
 
 TEST(unitTests, test_iStream)
 {
-    std::ifstream iStream("units/unit_2.json");
+    std::ifstream iStream("../units/unit_2.json");
     std::map<std::string, std::string> expectedData{
         {"name", "Sally"},
         {"hp", "140"},
@@ -23,7 +23,7 @@ TEST(unitTests, test_iStream)
 
 TEST(unitTests, test_iString)
 {
-    std::string iString = "units/unit_1.json";
+    std::string iString = "../units/unit_1.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Maple"},
         {"hp", "200"},
@@ -39,7 +39,7 @@ TEST(unitTests, test_iString)
 
 TEST(unitTests, test_whitespaces)
 {
-    std::string fileName = "units/test_units/valid_unit_1.json";
+    std::string fileName = "../units/test_units/valid_unit_1.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Valid Unit #1"},
         {"hp", "100"},
@@ -55,7 +55,7 @@ TEST(unitTests, test_whitespaces)
 
 TEST(unitTests, test_changedJSONorder)
 {
-    std::string fileName = "units/test_units/valid_unit_2.json";
+    std::string fileName = "../units/test_units/valid_unit_2.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Valid Unit #2"},
         {"hp", "100"},
@@ -72,7 +72,7 @@ TEST(unitTests, test_changedJSONorder)
 TEST(unitTests, test_invalidKey)
 {
     const std::string expectedErrorMsg = "Invalid key: nev";
-    std::ifstream invalidInput("units/test_units/invalid_unit_1.json");
+    std::ifstream invalidInput("../units/test_units/invalid_unit_1.json");
     try {
         std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
     }
@@ -84,7 +84,7 @@ TEST(unitTests, test_invalidKey)
 TEST(unitTests, test_invalidDataFormat)
 {
     const std::string expectedErrorMsg = "Invalid data format:  \"20";
-    std::ifstream invalidInput("units/test_units/invalid_unit_2.json");
+    std::ifstream invalidInput("../units/test_units/invalid_unit_2.json");
     try {
         std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
     }
@@ -96,7 +96,7 @@ TEST(unitTests, test_invalidDataFormat)
 TEST(unitTests, test_invalidDataType)
 {
     const std::string expectedErrorMsg = "Invalid data type:  \"1.0.1\"";
-    std::ifstream invalidInput("units/test_units/invalid_unit_3.json");
+    std::ifstream invalidInput("../units/test_units/invalid_unit_3.json");
     try {
         std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
     }
@@ -108,7 +108,7 @@ TEST(unitTests, test_invalidDataType)
 TEST(unitTests, test_missingJSON)
 {
     const std::string expectedErrorMsg = "Error while opening file: missingJSON.json";
-    std::ifstream missingFile("missingJSON.json");
+    std::ifstream missingFile("../missingJSON.json");
     try {
         std::map<std::string, std::string> data = JSONParser::ParseStream(missingFile);
     }
@@ -119,8 +119,8 @@ TEST(unitTests, test_missingJSON)
 
 TEST(unitTests, test_fight)
 {
-    Unit A = Unit::parseUnit("units/unit_1.json");
-    Unit B = Unit::parseUnit("units/unit_2.json");
+    Unit A = Unit::parseUnit("../units/unit_1.json");
+    Unit B = Unit::parseUnit("../units/unit_2.json");
 
     A.fight(B);
 
@@ -129,8 +129,8 @@ TEST(unitTests, test_fight)
 
 TEST(unitTests, test_level)
 {
-    Unit A = Unit::parseUnit("units/unit_1.json");
-    Unit B = Unit::parseUnit("units/unit_2.json");
+    Unit A = Unit::parseUnit("../units/unit_1.json");
+    Unit B = Unit::parseUnit("../units/unit_2.json");
 
     A.fight(B);
 
@@ -140,8 +140,8 @@ TEST(unitTests, test_level)
 
 TEST(unitTests, test_levelUpStats)
 {
-    Unit A = Unit::parseUnit("units/unit_1.json");
-    Unit B = Unit::parseUnit("units/unit_3.json");
+    Unit A = Unit::parseUnit("../units/unit_1.json");
+    Unit B = Unit::parseUnit("../units/unit_3.json");
 
     int expectedDmg = round(A.getDmg() * 1.1);
     int expectedHp = round(A.getHp() * 1.1);
