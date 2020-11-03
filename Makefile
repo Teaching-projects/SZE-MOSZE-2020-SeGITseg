@@ -15,12 +15,12 @@ jsonparser.o: jsonparser.cpp jsonparser.h
 	$(CC) $(CFLAGS) -c jsonparser.cpp
 
 static-code-analysis:
-	bash -c "chmod +x cppcheck_test.sh"
-	bash -c "./cppcheck_test.sh"
+	chmod +x cppcheck_test.sh
+	./cppcheck_test.sh
 
 memory-leak-check:
-	bash -c "chmod +x memory_test.sh"
-	bash -c "./memory_test.sh"
+	chmod +x memory_test.sh
+	./memory_test.sh
 
 run_unit_tests:
 	cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make
@@ -30,9 +30,9 @@ run_unit_tests:
 	cd test && cmake CMakeLists.txt && make && ./unitTests
 
 io-diff-tests:
-	bash -c "chmod +x run_test.sh"
-	bash -c "./run_test.sh game results.txt"
-	bash -c "diff test/results.txt test/expected_results.txt"
+	chmod +x run_test.sh
+	./run_test.sh game results.txt
+	diff test/results.txt test/expected_results.txt
 
 documentation:
 	doxygen doxconf
