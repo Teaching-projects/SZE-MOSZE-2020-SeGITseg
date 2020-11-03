@@ -154,7 +154,7 @@ TEST(unitTests, test_levelUpStats)
 
 TEST(unitTests, test_getters)
 {
-    Unit A = Unit::parseUnit("units/unit_1.json");
+    Unit A = Unit::parseUnit("../units/unit_1.json");
 
     ASSERT_EQ(A.getName(), "Maple");
     ASSERT_EQ(A.getHp(), 200);
