@@ -3,9 +3,9 @@
 *
 * \brief This is the Unit class, which contains the attributes and methods of the units.
 *
-* \author Kreutzog András, Káldy Kristóf, Boros Dávid
+* \author Boros Dávid, Káldy Kristóf, Kreutzog András 
 *
-* \version 0.1
+* \version 1.0
 *
 * \date 2020/10/09 15:40
 *
