@@ -1,8 +1,6 @@
 name: Unit test for JSON parser
 
-on: 
-  push:
-      branches: [jsonparser]
+on: push
 
 jobs:
   build:
@@ -22,4 +20,4 @@ jobs:
       - name: Build test
         run: cd test && make
       - name: Run test
-        run: test/parserTest
+        run: test/unitTests
