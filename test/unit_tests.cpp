@@ -152,6 +152,17 @@ TEST(unitTests, test_levelUpStats)
     ASSERT_EQ(A.getHp(), expectedHp);
 }
 
+TEST(unitTests, test_getters)
+{
+    Unit A = Unit::parseUnit("units/unit_1.json");
+
+    ASSERT_EQ(A.getName(), "Maple");
+    ASSERT_EQ(A.getHp(), 200);
+    ASSERT_EQ(A.getDmg(), 60);
+    ASSERT_EQ(A.getCd(), 2);
+    ASSERT_EQ(A.getLvl(), 1);
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);

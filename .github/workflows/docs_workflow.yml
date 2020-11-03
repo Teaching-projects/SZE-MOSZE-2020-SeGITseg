@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - makefile
+      - documentation
       - gh-pages
 
 jobs:
@@ -16,6 +17,7 @@ jobs:
 
       - run: sudo apt-get install doxygen
       - run: sudo apt-get install graphviz
+
       - run: make documentation
 
       - name: Push git subdirectory as branch
