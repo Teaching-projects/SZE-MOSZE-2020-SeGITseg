@@ -1,11 +1,11 @@
-#include "jsonparser.h"
+#include "JSON.h"
 
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <algorithm>
 
-bool JSONParser::isNumeric(const std::string &str)
+bool JSON::isNumeric(const std::string &str)
 {
     std::size_t chr(0);
 
@@ -21,7 +21,7 @@ bool JSONParser::isNumeric(const std::string &str)
     return chr == str.size();
 }
 
-std::string JSONParser::getData(const std::string &line)
+std::string JSON::getData(const std::string &line)
 {
     int firstNonSpace = line.find_first_not_of(' ');
     int lastNonSpace = line.find_last_not_of(' ');
@@ -40,7 +40,7 @@ std::string JSONParser::getData(const std::string &line)
     throw std::runtime_error("Invalid data format: " + line);
 }
 
-std::map<std::string, std::string> JSONParser::ParseStream(std::istream &inputStream)
+std::map<std::string, std::string> JSON::ParseStream(std::istream &inputStream)
 {
     std::map<std::string, std::string> parsedData;
     std::string line;
@@ -65,13 +65,13 @@ std::map<std::string, std::string> JSONParser::ParseStream(std::istream &inputSt
     return parsedData;
 }
 
-std::map<std::string, std::string> JSONParser::ParseString(const std::string &inputString)
+std::map<std::string, std::string> JSON::ParseString(const std::string &inputString)
 {
     std::istringstream stringStream(inputString);
     return ParseStream(stringStream);
 }
 
-std::map<std::string, std::string> JSONParser::ParseFile(const std::string &fileName)
+std::map<std::string, std::string> JSON::ParseFile(const std::string &fileName)
 {
     std::ifstream fileStream(fileName);
 

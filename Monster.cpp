@@ -1,5 +1,5 @@
 #include "Monster.h"
-#include "jsonparser.h"
+#include "JSON.h"
 #include <cmath>
 
 Unit::Unit(const std::string& name, int hp, int dmg, const double& cd)

@@ -1,7 +1,7 @@
 /**
-* \class JSONParser
+* \class JSON
 *
-* \brief This is the JSONParser class, which is used to parse raw JSON input.
+* \brief This is the JSON class, which is used to parse raw JSON input.
 *
 * \author Boros Dávid, Káldy Kristóf, Kreutzog András 
 *
@@ -12,14 +12,14 @@
 * Created on: 2020/10/15 17:30
 */
 
-#ifndef JSONPARSER_H
-#define JSONPARSER_H
+#ifndef JSON_H
+#define JSON_H
 
 #include <map>
 #include <string>
 #include <istream>
 
-class JSONParser
+class JSON
 {
 private:
     static bool isNumeric(const std::string &input);
