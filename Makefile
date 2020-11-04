@@ -1,18 +1,21 @@
-OBJS := main.o unit.o jsonparser.o
+OBJS := main.o Hero.o Monster.o JSON.o
 CFLAGS := -Wall -Wextra -std=c++17
 CC := g++
 
 build: $(OBJS)
 	$(CC) $(CFLAGS) -o game $(OBJS)
 
-main.o: main.cpp unit.h jsonparser.h
+main.o: main.cpp Hero.h Monster.h JSON.h
 	$(CC) $(CFLAGS) -c main.cpp
 
-unit.o: unit.cpp unit.h jsonparser.h
-	$(CC) $(CFLAGS) -c unit.cpp
+Hero.o: Hero.cpp Hero.h Monster.h JSON.h
+	$(CC) $(CFLAGS) -c Hero.cpp
 
-jsonparser.o: jsonparser.cpp jsonparser.h
-	$(CC) $(CFLAGS) -c jsonparser.cpp
+Monster.o: Monster.cpp Monster.h JSON.h
+	$(CC) $(CFLAGS) -c Monster.cpp
+
+jsonparser.o: JSON.cpp JSON.h
+	$(CC) $(CFLAGS) -c JSON.cpp
 
 static-code-analysis:
 	chmod +x cppcheck_test.sh
