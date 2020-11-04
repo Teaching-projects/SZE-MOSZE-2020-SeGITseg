@@ -1,5 +1,5 @@
-#include "../jsonparser.h"
-#include "../unit.h"
+#include "../JSON.h"
+#include "../Monster.h"
 #include <fstream>
 #include <cmath>
 
@@ -13,7 +13,7 @@ TEST(unitTests, test_iStream)
         {"hp", "140"},
         {"dmg", "30"},
         {"cd", "1.5"}};
-    std::map<std::string, std::string> data = JSONParser::ParseStream(iStream);
+    std::map<std::string, std::string> data = JSON::ParseStream(iStream);
 
     for (auto e : expectedData)
     {
@@ -29,7 +29,7 @@ TEST(unitTests, test_iString)
         {"hp", "200"},
         {"dmg", "60"},
         {"cd", "2"}};
-    std::map<std::string, std::string> data = JSONParser::ParseFile(iString);
+    std::map<std::string, std::string> data = JSON::ParseFile(iString);
 
     for (auto e : expectedData)
     {
@@ -45,7 +45,7 @@ TEST(unitTests, test_whitespaces)
         {"hp", "100"},
         {"dmg", "20"},
         {"cd", "1"}};
-    std::map<std::string, std::string> data = JSONParser::ParseFile(fileName);
+    std::map<std::string, std::string> data = JSON::ParseFile(fileName);
 
     for (auto e : expectedData)
     {
@@ -61,7 +61,7 @@ TEST(unitTests, test_changedJSONorder)
         {"hp", "100"},
         {"dmg", "20"},
         {"cd", "1"}};
-    std::map<std::string, std::string> data = JSONParser::ParseFile(fileName);
+    std::map<std::string, std::string> data = JSON::ParseFile(fileName);
 
     for (auto e : expectedData)
     {
@@ -74,7 +74,7 @@ TEST(unitTests, test_invalidKey)
     const std::string expectedErrorMsg = "Invalid key: nev";
     std::ifstream invalidInput("../units/test_units/invalid_unit_1.json");
     try {
-        std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
+        std::map<std::string, std::string> data = JSON::ParseStream(invalidInput);
     }
     catch (std::runtime_error &e) {
         ASSERT_EQ(e.what(), expectedErrorMsg);
@@ -86,7 +86,7 @@ TEST(unitTests, test_invalidDataFormat)
     const std::string expectedErrorMsg = "Invalid data format:  \"20";
     std::ifstream invalidInput("../units/test_units/invalid_unit_2.json");
     try {
-        std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
+        std::map<std::string, std::string> data = JSON::ParseStream(invalidInput);
     }
     catch (std::runtime_error &e) {	
         ASSERT_EQ(e.what(), expectedErrorMsg);	
@@ -98,7 +98,7 @@ TEST(unitTests, test_invalidDataType)
     const std::string expectedErrorMsg = "Invalid data type:  \"1.0.1\"";
     std::ifstream invalidInput("../units/test_units/invalid_unit_3.json");
     try {
-        std::map<std::string, std::string> data = JSONParser::ParseStream(invalidInput);
+        std::map<std::string, std::string> data = JSON::ParseStream(invalidInput);
     }
     catch (std::runtime_error &e) {	
         ASSERT_EQ(e.what(), expectedErrorMsg);	
@@ -110,7 +110,7 @@ TEST(unitTests, test_missingJSON)
     const std::string expectedErrorMsg = "Error while opening file: missingJSON.json";
     std::ifstream missingFile("../missingJSON.json");
     try {
-        std::map<std::string, std::string> data = JSONParser::ParseStream(missingFile);
+        std::map<std::string, std::string> data = JSON::ParseStream(missingFile);
     }
     catch (std::runtime_error &e) {	
         ASSERT_EQ(e.what(), expectedErrorMsg);	
