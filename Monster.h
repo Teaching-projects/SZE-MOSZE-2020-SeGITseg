@@ -1,5 +1,5 @@
 /**
-* \class Unit
+* \class Monster
 *
 * \brief This is the Unit class, which contains the attributes and methods of the units.
 *
@@ -12,8 +12,8 @@
 * Created on: 2020/10/09 15:40
 */
 
-#ifndef UNIT_H
-#define UNIT_H
+#ifndef MONSTER_H
+#define MONSTER_H
 
 #include <iostream>
 #include <fstream>
