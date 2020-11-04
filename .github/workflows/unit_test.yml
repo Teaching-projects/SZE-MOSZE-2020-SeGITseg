@@ -1,8 +1,6 @@
 name: Unit test for JSON parser
 
-on: 
-  push:
-      branches: [jsonparser]
+on: push
 
 jobs:
   build:
@@ -11,15 +9,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install depedencies
         run: sudo apt install libgtest-dev && sudo apt install cmake
-      - name: Create testing environment
-        run: cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make
-      - name: Create references
-        run: sudo ln -st /usr/lib/ /usr/src/gtest/libgtest.a && sudo ln -st /usr/lib/ /usr/src/gtest/libgtest_main.a
-      - name: Compile code
-        run: g++ -std=c++17 *.cpp
-      - name: Prepare build environment
-        run: cmake test/CMakeLists.txt
-      - name: Build test
-        run: cd test && make
-      - name: Run test
-        run: test/parserTest
+      - name: Run unit tests
+        run: make run_unit_tests

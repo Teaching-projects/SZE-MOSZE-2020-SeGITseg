@@ -3,28 +3,28 @@ name: Documentation Workflow
 on:
   push:
     branches:
-      - attackspeed
+      - master
+      - makefile
       - gh-pages
 
 jobs:
-
   deploy:
     name: Deploy to github pages
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    
-    - run: sudo apt-get install doxygen
-    - run: sudo apt-get install graphviz
-    - run: doxygen doxconf
+      - uses: actions/checkout@master
 
-    - name: Push git subdirectory as branch
-      uses: s0/git-publish-subdir-action@v2.4.0
+      - run: sudo apt-get install doxygen
+      - run: sudo apt-get install graphviz
 
-      env:
-        REPO: self
-        BRANCH: gh-pages
-        FOLDER: DOCS/html
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CLEAN: true
+      - run: make documentation
 
+      - name: Push git subdirectory as branch
+        uses: s0/git-publish-subdir-action@v2.4.0
+
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: DOCS/html
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLEAN: true
