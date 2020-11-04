@@ -119,8 +119,8 @@ TEST(unitTests, test_missingJSON)
 
 TEST(unitTests, test_fight)
 {
-    Unit A = Unit::parseUnit("../units/unit_1.json");
-    Unit B = Unit::parseUnit("../units/unit_2.json");
+    Monster A = Monster::parseUnit("../units/unit_1.json");
+    Monster B = Monster::parseUnit("../units/unit_2.json");
 
     A.fight(B);
 
@@ -129,8 +129,8 @@ TEST(unitTests, test_fight)
 
 TEST(unitTests, test_level)
 {
-    Unit A = Unit::parseUnit("../units/unit_1.json");
-    Unit B = Unit::parseUnit("../units/unit_2.json");
+    Monster A = Monster::parseUnit("../units/unit_1.json");
+    Monster B = Monster::parseUnit("../units/unit_2.json");
 
     A.fight(B);
 
@@ -140,8 +140,8 @@ TEST(unitTests, test_level)
 
 TEST(unitTests, test_levelUpStats)
 {
-    Unit A = Unit::parseUnit("../units/unit_1.json");
-    Unit B = Unit::parseUnit("../units/unit_3.json");
+    Monster A = Monster::parseUnit("../units/unit_1.json");
+    Monster B = Monster::parseUnit("../units/unit_3.json");
 
     int expectedDmg = round(A.getDmg() * 1.1);
     int expectedHp = round(A.getHp() * 1.1);
@@ -154,7 +154,7 @@ TEST(unitTests, test_levelUpStats)
 
 TEST(unitTests, test_getters)
 {
-    Unit A = Unit::parseUnit("../units/unit_1.json");
+    Monster A = Monster::parseUnit("../units/unit_1.json");
 
     ASSERT_EQ(A.getName(), "Maple");
     ASSERT_EQ(A.getHp(), 200);

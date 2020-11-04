@@ -2,35 +2,35 @@
 #include "JSON.h"
 #include <cmath>
 
-Unit::Unit(const std::string& name, int hp, int dmg, const double& cd)
+Monster::Monster(const std::string& name, int hp, int dmg, const double& cd)
 	: name(name), hp(hp), dmg(dmg), cd(cd), maxHP(hp), xp(0), lvl(1) {}
 
-std::string Unit::getName() const
+std::string Monster::getName() const
 {
 	return name;
 }
 
-int Unit::getHp() const
+int Monster::getHp() const
 {
 	return hp;
 }
 
-int Unit::getDmg() const
+int Monster::getDmg() const
 {
 	return dmg;
 }
 
-double Unit::getCd() const
+double Monster::getCd() const
 {
 	return cd;
 }
 
-int Unit::getLvl() const
+int Monster::getLvl() const
 {
 	return lvl;
 }
 
-void Unit::attack(Unit& target)
+void Monster::attack(Monster& target)
 {
 	if (target.getHp() - dmg > 0)
 	{
@@ -45,7 +45,7 @@ void Unit::attack(Unit& target)
 	}
 }
 
-void Unit::addXp(const int& dmg)
+void Monster::addXp(const int& dmg)
 {
 	xp += dmg;
 	while (xp >= 100)
@@ -55,7 +55,7 @@ void Unit::addXp(const int& dmg)
 	}
 }
 
-void Unit::lvlUp()
+void Monster::lvlUp()
 {
 	lvl++;
 	maxHP = round(maxHP * 1.1);
@@ -63,7 +63,7 @@ void Unit::lvlUp()
 	dmg = round(dmg * 1.1);
 }
 
-Unit* Unit::fight(Unit& other)
+Monster* Monster::fight(Monster& other)
 {
 	attack(other);
 	if (other.getHp() > 0)
@@ -96,12 +96,12 @@ Unit* Unit::fight(Unit& other)
 	}
 }
 
-Unit Unit::parseUnit(const std::string& fileName)
+Monster Monster::parseUnit(const std::string& fileName)
 {
 	std::string name;
 	int hp, dmg;
 	double cd;
-	std::map<std::string, std::string> unitData = JSONParser::ParseFile(fileName);
+	std::map<std::string, std::string> unitData = JSON::ParseFile(fileName);
 	try
 	{
 		name = unitData.at("name");
@@ -114,10 +114,10 @@ Unit Unit::parseUnit(const std::string& fileName)
 		throw std::runtime_error("Missing data: " + (std::string)oor.what());
 	}
 
-	return Unit(name, hp, dmg, cd);
+	return Monster(name, hp, dmg, cd);
 }
 
-std::ostream& operator<<(std::ostream& out, const Unit& u)
+std::ostream& operator<<(std::ostream& out, const Monster& u)
 {
 	return out << u.getName() << ": HP: " << u.getHp() << ", DMG: " << u.getDmg() << ", CD: " << u.getCd() << "\n";
 }
