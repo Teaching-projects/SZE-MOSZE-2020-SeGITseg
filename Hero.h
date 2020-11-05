@@ -1,6 +1,8 @@
 #ifndef HERO_H
 #define HERO_H
 
+#include "Monster.h"
+
 class Hero : public Monster
 {
 private:
