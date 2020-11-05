@@ -18,14 +18,16 @@
 #include <map>
 #include <string>
 #include <istream>
+#include <any>
 
 class JSON
 {
 private:
-	std::map<std::string, std::string> data;
-	JSON(std::map<std::string, std::string> data) : data(data) {};
+	std::map<std::string, std::any> data;
+	JSON(std::map<std::string, std::any> data) : data(data) {};
+
     static bool isNumeric(const std::string &input);
-    static std::string getData(const std::string &line);
+    static std::any getData(const std::string &line);
 
 public:
     /**
@@ -55,6 +57,14 @@ public:
 		*/ 
 		ParseException(const std::string &message /** [in] The error message. */) : std::runtime_error(message) {}
 	};
+	/**
+	 * \brief This is the template
+	*/
+	template <typename T>
+    T get(const std::string &key)
+    {
+        return std::any_cast<T>(data[key]);
+    }
 };
 
 #endif

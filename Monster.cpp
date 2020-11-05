@@ -118,13 +118,13 @@ Monster Monster::parse(const std::string& fileName)
 	std::string name;
 	int hp, dmg;
 	double cd;
-	std::map<std::string, std::string> unitData = JSON::parseFromFile(fileName);
+	JSON unitData = JSON::parseFromFile(fileName);
 	try
 	{
-		name = unitData.at("name");
-		hp = std::stoi(unitData.at("hp"));
-		dmg = std::stoi(unitData.at("dmg"));
-		cd = std::stod(unitData.at("cd"));
+		name = unitData.get<std::string>("name");
+		hp = unitData.get<int>("hp");
+		dmg = unitData.get<int>("dmg");
+		cd = unitData.get<double>("cd");
 	}
 	catch (const std::out_of_range& oor)
 	{
