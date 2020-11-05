@@ -8,16 +8,16 @@
 TEST(unitTests, test_iStream)
 {
     std::ifstream iStream("../units/unit_2.json");
-    std::map<std::string, std::string> expectedData{
+    std::map<std::string, std::any> expectedData{
         {"name", "Sally"},
-        {"hp", "140"},
-        {"dmg", "30"},
-        {"cd", "1.5"}};
+        {"hp", 140},
+        {"dmg", 30},
+        {"cd", 1.5}};
     JSON data = JSON::parseFromStream(iStream);
 
     for (auto e : expectedData)
     {
-        ASSERT_EQ(data.get<std::string>(e.first), e.second);
+        ASSERT_EQ(data.get<std::any>(e.first), e.second);
     }
 }
 
@@ -26,14 +26,14 @@ TEST(unitTests, test_iString)
     std::string iString = "../units/unit_1.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Maple"},
-        {"hp", "200"},
-        {"dmg", "60"},
-        {"cd", "2"}};
+        {"hp", 200},
+        {"dmg", 60},
+        {"cd", 2}};
     JSON data = JSON::parseFromFile(iString);
 
     for (auto e : expectedData)
     {
-        ASSERT_EQ(data.get<std::string>(e.first), e.second);
+        ASSERT_EQ(data.get<std::any>(e.first), e.second);
     }
 }
 
@@ -42,14 +42,14 @@ TEST(unitTests, test_whitespaces)
     std::string fileName = "../units/test_units/valid_unit_1.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Valid Unit #1"},
-        {"hp", "100"},
-        {"dmg", "20"},
-        {"cd", "1"}};
+        {"hp", 100},
+        {"dmg", 20},
+        {"cd", 1}};
     JSON data = JSON::parseFromFile(fileName);
 
     for (auto e : expectedData)
     {
-        ASSERT_EQ(data.get<std::string>(e.first), e.second);
+        ASSERT_EQ(data.get<std::any>(e.first), e.second);
     }
 }
 
@@ -58,14 +58,14 @@ TEST(unitTests, test_changedJSONorder)
     std::string fileName = "../units/test_units/valid_unit_2.json";
     std::map<std::string, std::string> expectedData{
         {"name", "Valid Unit #2"},
-        {"hp", "100"},
-        {"dmg", "20"},
-        {"cd", "1"}};
+        {"hp", 100},
+        {"dmg", 20},
+        {"cd", 1}};
     JSON data = JSON::parseFromFile(fileName);
 
     for (auto e : expectedData)
     {
-        ASSERT_EQ(data.get<std::string>(e.first), e.second);
+        ASSERT_EQ(data.get<std::any>(e.first), e.second);
     }
 }
 
