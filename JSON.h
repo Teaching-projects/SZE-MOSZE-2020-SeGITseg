@@ -22,8 +22,8 @@
 class JSON
 {
 private:
-	std::map<std::string, std::any> data;
-	JSON(std::map<std::string, std::any> data) : data(data) {};
+	std::map<std::string, std::string> data;
+	JSON(std::map<std::string, std::string> data) : data(data) {};
     static bool isNumeric(const std::string &input);
     static std::string getData(const std::string &line);
 
