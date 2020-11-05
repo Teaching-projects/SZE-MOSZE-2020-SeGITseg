@@ -15,20 +15,20 @@
 #ifndef JSON_H
 #define JSON_H
 
-#include <any>
+#include <variant>
 #include <map>
 #include <string>
-#include <iostream>
+#include <istream>
 
 class JSON
 {
 private:
-	std::map<std::string, std::any> data;
+	std::map<std::string, std::variant<std::string, int, float>> data;
     static bool isNumeric(const std::string &input);
-    static std::any getData(const std::string &line);
+    static std::string getData(const std::string &line);
 
 public:
-	JSON(std::map<std::string, std::any> d) : data(d) {}
+	JSON(std::map<std::string, std::variant<std::string, int, float>> d) : data(d) {}
     /**
 	 *  \brief This is the function to parse JSON from an input stream.
 	 *  \return Returns the parsed JSON in a map.
@@ -59,7 +59,7 @@ public:
 
 	template <typename T>
     T get(const std::string &key) {
-        return std::any_cast<T>(data[key]);
+        return static_cast<T>(data[key]);
     }
 
 	int count(const std::string &key) const {
