@@ -52,7 +52,7 @@ public:
 		 * \brief This is the constructor of the parser exception.
 		*/ 
 		ParseException(const std::string &message /** [in] The error message. */) : std::runtime_error(message) {}
-	}
+	};
 };
 
 #endif
