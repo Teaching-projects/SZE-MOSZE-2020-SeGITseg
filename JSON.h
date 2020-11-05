@@ -24,12 +24,11 @@ class JSON
 {
 private:
 	std::map<std::string, std::any> data;
-	JSON(std::map<std::string, std::any> d) : data(d) {}
-
     static bool isNumeric(const std::string &input);
     static std::any getData(const std::string &line);
 
 public:
+	JSON(std::map<std::string, std::any> d) : data(d) {}
     /**
 	 *  \brief This is the function to parse JSON from an input stream.
 	 *  \return Returns the parsed JSON in a map.
