@@ -4,7 +4,6 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-#include <variant>
 
 bool JSON::isNumeric(const std::string &str)
 {
@@ -22,7 +21,7 @@ bool JSON::isNumeric(const std::string &str)
     return chr == str.size();
 }
 
-std::any JSON::getData(const std::string &line)
+std::string JSON::getData(const std::string &line)
 {
     int firstNonSpace = line.find_first_not_of(' ');
     int lastNonSpace = line.find_last_not_of(' ');
@@ -35,8 +34,7 @@ std::any JSON::getData(const std::string &line)
         if (!isNumeric(data)) {
             throw JSON::ParseException("Invalid data type: " + data);
         }
-        if (data.find_first_of('.') != std::string::npos) return stof(data);
-        return stoi(data);
+        return data;
     }
 
     throw JSON::ParseException("Invalid data format: " + line);
@@ -44,22 +42,23 @@ std::any JSON::getData(const std::string &line)
 
 JSON JSON::parseFromStream(std::istream &inputStream)
 {
-    std::map<std::string, std::any> parsedData;
+    std::map<std::string, std::string> parsedData;
     std::string line;
 
     while (std::getline(inputStream, line)) {
         if (line.find(":") != std::string::npos) {
             if (line.back() == ',') { line.pop_back(); }
 
-            std::any key = getData(line.substr(0, line.find(":")));
+            std::string key = getData(line.substr(0, line.find(":")));
 
-            std::any value = getData(line.substr(line.find(":") + 1));
+            std::string value = getData(line.substr(line.find(":") + 1));
 
-            parsedData.insert(std::pair<std::string, std::any>(std::any_cast<std::string>(key), value));
+            parsedData.insert(std::pair<std::string, std::string>(key, value));
         }
     }
 
-    return parsedData;
+    JSON data(parsedData);
+    return data;
 }
 
 JSON JSON::parseFromString(const std::string &inputString)

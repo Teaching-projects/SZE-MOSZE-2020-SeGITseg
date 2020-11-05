@@ -18,16 +18,15 @@
 #include <map>
 #include <string>
 #include <istream>
-#include <any>
 
 class JSON
 {
 private:
-	std::map<std::string, std::any> data;
-	JSON(std::map<std::string, std::any> data) : data(data) {};
+	std::map<std::string, std::string> data;
+	JSON(std::map<std::string, std::string> data) : data(data) {};
 
     static bool isNumeric(const std::string &input);
-    static std::any getData(const std::string &line);
+    static std::string getData(const std::string &line);
 
 public:
     /**
@@ -63,7 +62,7 @@ public:
 	template <typename T>
     T get(const std::string &key)
     {
-        return std::any_cast<T>(data[key]);
+        return static_cast<T>(data[key]);
     }
 };
 
