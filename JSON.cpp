@@ -32,15 +32,15 @@ std::string JSON::getData(const std::string &line)
     else if (line.at(firstNonSpace) != '\"' && line.at(lastNonSpace) != '\"') {
         std::string data = line.substr(firstNonSpace, lastNonSpace - firstNonSpace + 1);
         if (!isNumeric(data)) {
-            throw std::runtime_error("Invalid data type: " + data);
+            throw JSON::ParseException("Invalid data type: " + data);
         }
         return data;
     }
 
-    throw std::runtime_error("Invalid data format: " + line);
+    throw JSON::ParseException("Invalid data format: " + line);
 }
 
-std::map<std::string, std::string> JSON::ParseStream(std::istream &inputStream)
+std::map<std::string, std::string> JSON::parseFromStream(std::istream &inputStream)
 {
     std::map<std::string, std::string> parsedData;
     std::string line;
@@ -53,7 +53,7 @@ std::map<std::string, std::string> JSON::ParseStream(std::istream &inputStream)
 
             std::vector<std::string> validKeys{"name", "hp", "dmg", "cd"};
             if (std::find(std::begin(validKeys), std::end(validKeys), key) == std::end(validKeys)) {
-                throw std::runtime_error("Invalid key: " + key);
+                throw JSON::ParseException("Invalid key: " + key);
             }
 
             std::string value = getData(line.substr(line.find(":") + 1));
@@ -65,19 +65,19 @@ std::map<std::string, std::string> JSON::ParseStream(std::istream &inputStream)
     return parsedData;
 }
 
-std::map<std::string, std::string> JSON::ParseString(const std::string &inputString)
+std::map<std::string, std::string> JSON::parseFromString(const std::string &inputString)
 {
     std::istringstream stringStream(inputString);
-    return ParseStream(stringStream);
+    return parseFromStream(stringStream);
 }
 
-std::map<std::string, std::string> JSON::ParseFile(const std::string &fileName)
+std::map<std::string, std::string> JSON::parseFromFile(const std::string &fileName)
 {
     std::ifstream fileStream(fileName);
 
     if (fileStream.good() && fileStream.is_open()) {
-        return ParseStream(fileStream);
+        return parseFromStream(fileStream);
     }
 
-    throw std::runtime_error("Error while opening file: " + fileName);
+    throw JSON::ParseException("Error while opening file: " + fileName);
 }

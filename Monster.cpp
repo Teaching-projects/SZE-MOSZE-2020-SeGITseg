@@ -118,7 +118,7 @@ Monster Monster::parse(const std::string& fileName)
 	std::string name;
 	int hp, dmg;
 	double cd;
-	std::map<std::string, std::string> unitData = JSON::ParseFile(fileName);
+	std::map<std::string, std::string> unitData = JSON::parseFromFile(fileName);
 	try
 	{
 		name = unitData.at("name");

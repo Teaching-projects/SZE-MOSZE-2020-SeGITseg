@@ -30,17 +30,29 @@ public:
 	 *  \brief This is the function to parse JSON from an input stream.
 	 *  \return Returns the parsed JSON in a map.
 	*/
-    static std::map<std::string, std::string> ParseStream(std::istream &inputStream /** [in] An istream object. */);
+    static std::map<std::string, std::string> parseFromStream(std::istream &inputStream /** [in] An istream object. */);
     /**
 	 *  \brief This is the function to parse JSON from a string.
 	 *  \return Returns the parsed JSON in a map.
 	*/
-    static std::map<std::string, std::string> ParseString(const std::string &inputString /** [in] A string object. */);
+    static std::map<std::string, std::string> parseFromString(const std::string &inputString /** [in] A string object. */);
     /**
 	 *  \brief This is the function to parse JSON from a file.
 	 *  \return Returns the parsed JSON in a map.
 	*/
-    static std::map<std::string, std::string> ParseFile(const std::string &fileName /** [in] A filename object. */);
+    static std::map<std::string, std::string> parseFromFile(const std::string &fileName /** [in] A filename object. */);
+	/**
+	 * \class ParseException
+	 * \brief This is the custom exception that is called when a parsing error occurs.
+	*/
+	class ParseException : public std::runtime_error
+	{
+	public:
+		/**
+		 * \brief This is the constructor of the parser exception.
+		*/ 
+		ParseException(const std::string &message /** [in] The error message. */) : std::runtime_error(message) {}
+	}
 };
 
 #endif
