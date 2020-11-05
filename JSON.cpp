@@ -40,7 +40,7 @@ std::string JSON::getData(const std::string &line)
     throw JSON::ParseException("Invalid data format: " + line);
 }
 
-std::map<std::string, std::string> JSON::parseFromStream(std::istream &inputStream)
+JSON JSON::parseFromStream(std::istream &inputStream)
 {
     std::map<std::string, std::string> parsedData;
     std::string line;
@@ -65,13 +65,13 @@ std::map<std::string, std::string> JSON::parseFromStream(std::istream &inputStre
     return parsedData;
 }
 
-std::map<std::string, std::string> JSON::parseFromString(const std::string &inputString)
+JSON JSON::parseFromString(const std::string &inputString)
 {
     std::istringstream stringStream(inputString);
     return parseFromStream(stringStream);
 }
 
-std::map<std::string, std::string> JSON::parseFromFile(const std::string &fileName)
+JSON JSON::parseFromFile(const std::string &fileName)
 {
     std::ifstream fileStream(fileName);
 

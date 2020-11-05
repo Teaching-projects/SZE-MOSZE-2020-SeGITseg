@@ -22,6 +22,8 @@
 class JSON
 {
 private:
+	std::map<std::string, std::any> data;
+	JSON(std::map<std::string, std::any> data) : data(data) {};
     static bool isNumeric(const std::string &input);
     static std::string getData(const std::string &line);
 
@@ -30,17 +32,17 @@ public:
 	 *  \brief This is the function to parse JSON from an input stream.
 	 *  \return Returns the parsed JSON in a map.
 	*/
-    static std::map<std::string, std::string> parseFromStream(std::istream &inputStream /** [in] An istream object. */);
+    static JSON parseFromStream(std::istream &inputStream /** [in] An istream object. */);
     /**
 	 *  \brief This is the function to parse JSON from a string.
 	 *  \return Returns the parsed JSON in a map.
 	*/
-    static std::map<std::string, std::string> parseFromString(const std::string &inputString /** [in] A string object. */);
+    static JSON parseFromString(const std::string &inputString /** [in] A string object. */);
     /**
 	 *  \brief This is the function to parse JSON from a file.
 	 *  \return Returns the parsed JSON in a map.
 	*/
-    static std::map<std::string, std::string> parseFromFile(const std::string &fileName /** [in] A filename object. */);
+    static JSON parseFromFile(const std::string &fileName /** [in] A filename object. */);
 	/**
 	 * \class ParseException
 	 * \brief This is the custom exception that is called when a parsing error occurs.
