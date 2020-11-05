@@ -10,29 +10,34 @@ std::string Monster::getName() const
 	return name;
 }
 
-int Monster::getHp() const
+int Monster::getHealthPoints() const
 {
 	return hp;
 }
 
-int Monster::getDmg() const
+int Monster::getMaxHealthPoints() const
+{
+	return maxHP;
+}
+
+int Monster::getDamage() const
 {
 	return dmg;
 }
 
-double Monster::getCd() const
+double Monster::getAttackCoolDown() const
 {
 	return cd;
 }
 
-int Monster::getLvl() const
+int Monster::getLevel() const
 {
 	return lvl;
 }
 
 void Monster::attack(Monster& target)
 {
-	if (target.getHp() - dmg > 0)
+	if (target.getHealthPoints() - dmg > 0)
 	{
 		target.hp -= dmg;
 		addXp(dmg);
@@ -63,16 +68,16 @@ void Monster::lvlUp()
 	dmg = round(dmg * 1.1);
 }
 
-Monster* Monster::fight(Monster& other)
+Monster* Monster::fightTilDeath(Monster& other)
 {
 	attack(other);
-	if (other.getHp() > 0)
+	if (other.getHealthPoints() > 0)
 		other.attack(*this);
 
 	double timeA = cd;
-	double timeB = other.getCd();
+	double timeB = other.getAttackCoolDown();
 
-	while (hp > 0 && other.getHp() > 0)
+	while (hp > 0 && other.getHealthPoints() > 0)
 	{
 		if (timeA <= timeB)
 		{
@@ -82,7 +87,7 @@ Monster* Monster::fight(Monster& other)
 		else
 		{
 			other.attack(*this);
-			timeB += other.getCd();
+			timeB += other.getAttackCoolDown();
 		}
 	}
 
@@ -96,7 +101,19 @@ Monster* Monster::fight(Monster& other)
 	}
 }
 
-Monster Monster::parseUnit(const std::string& fileName)
+bool Monster::isAlive() const
+{
+	if (hp>0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+Monster Monster::parse(const std::string& fileName)
 {
 	std::string name;
 	int hp, dmg;
@@ -119,5 +136,5 @@ Monster Monster::parseUnit(const std::string& fileName)
 
 std::ostream& operator<<(std::ostream& out, const Monster& u)
 {
-	return out << u.getName() << ": HP: " << u.getHp() << ", DMG: " << u.getDmg() << ", CD: " << u.getCd() << "\n";
+	return out << u.getName() << ": HP: " << u.getHealthPoints() << ", DMG: " << u.getDamage() << ", CD: " << u.getAttackCoolDown() << "\n";
 }

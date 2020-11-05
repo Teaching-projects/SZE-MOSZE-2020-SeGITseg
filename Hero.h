@@ -3,8 +3,7 @@
 
 class Hero : public Monster
 {
-
-}
-
+    
+};
 
 #endif

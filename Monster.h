@@ -21,7 +21,7 @@
 
 class Monster
 {
-private:
+protected:
 	const std::string name; ///< The name of the unit.
 	int hp;					///< The current health points of the unit.
 	int dmg;				///< The damage of the unit.
@@ -29,12 +29,6 @@ private:
 	int maxHP;				///< The maximal health points of the unit.
 	int xp;					///< The xp of the unit.
 	int lvl;				///< The level of the unit.
-
-	void lvlUp(); ///< Function to level up the unit.
-	/// This private function adds xp to the unit when doing damage.
-	void addXp(const int& dmg /** [in] The damage param. */);
-	/// This private function does a single attack against a target unit.
-	void attack(Monster& target /** [in] The target param. */);
 
 public:
 	/// This is the constructor for the Unit class.
@@ -52,40 +46,56 @@ public:
 	 * 	\param none
 	 *  \return Returns the unit health.
 	*/
-	int getHp() const;
+	int getHealthPoints() const;
+
+	/**
+	 *  \brief This is a simple getter function for max health points.
+	 * 	\param none
+	 *  \return Returns the unit's max health.
+	*/
+	int getMaxHealthPoints() const;
 
 	/**
 	 *  \brief This is a simple getter function for unit damage.
 	 * 	\param none
 	 *  \return Returns the unit damage.
 	*/
-	int getDmg() const;
+	int getDamage() const;
 
 	/**
 	 *  \brief This is a simple getter function for unit attack cooldown.
 	 * 	\param none
 	 *  \return Returns the unit attack cooldown.
 	*/
-	double getCd() const;
+	double getAttackCoolDown() const;
 
 	/**
 	 *  \brief This is a simple getter function for unit level.
 	 * 	\param none
 	 *  \return Returns the unit level.
 	*/
-	int getLvl() const;
+	int getLevel() const;
 
 	/**
 	 *  \brief This is the function where the units fights each other until one of them dies (hp goes to 0).
 	 *  \return It returns the winner unit.
 	*/
-	Monster* fight(Monster& other /** [in] The opponent param. */);
+
+	bool isAlive() const;
+
+	void lvlUp(); ///< Function to level up the unit.
+	/// This function adds xp to the unit when doing damage.
+	void addXp(const int& dmg /** [in] The damage param. */);
+	/// This function does a single attack against a target unit.
+	void attack(Monster& target /** [in] The target param. */);
+
+	Monster* fightTilDeath(Monster& other /** [in] The opponent param. */);
 
 	/**
 	 *  \brief  This function inputs the units from files.
 	 *  \return It returns the unit name, hp, damage and cooldown.
 	*/
-	static Monster parseUnit(const std::string& fileName /** [in] The name of the input file. */);
+	static Monster parse(const std::string& fileName /** [in] The name of the input file. */);
 
 	/**
 	 *  \brief This is an output operator, used to output the unit's attributes.

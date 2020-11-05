@@ -119,48 +119,48 @@ TEST(unitTests, test_missingJSON)
 
 TEST(unitTests, test_fight)
 {
-    Monster A = Monster::parseUnit("../units/unit_1.json");
-    Monster B = Monster::parseUnit("../units/unit_2.json");
+    Monster A = Monster::parse("../units/unit_1.json");
+    Monster B = Monster::parse("../units/unit_2.json");
 
-    A.fight(B);
+    A.fightTilDeath(B);
 
-    ASSERT_TRUE(A.getHp() == 0 || B.getHp() == 0);
+    ASSERT_TRUE(A.getHealthPoints() == 0 || B.getHealthPoints() == 0);
 }
 
 TEST(unitTests, test_level)
 {
-    Monster A = Monster::parseUnit("../units/unit_1.json");
-    Monster B = Monster::parseUnit("../units/unit_2.json");
+    Monster A = Monster::parse("../units/unit_1.json");
+    Monster B = Monster::parse("../units/unit_2.json");
 
-    A.fight(B);
+    A.fightTilDeath(B);
 
-    ASSERT_EQ(A.getLvl(), 2);
-    ASSERT_EQ(B.getLvl(), 1);
+    ASSERT_EQ(A.getLevel(), 2);
+    ASSERT_EQ(B.getLevel(), 1);
 }
 
 TEST(unitTests, test_levelUpStats)
 {
-    Monster A = Monster::parseUnit("../units/unit_1.json");
-    Monster B = Monster::parseUnit("../units/unit_3.json");
+    Monster A = Monster::parse("../units/unit_1.json");
+    Monster B = Monster::parse("../units/unit_3.json");
 
-    int expectedDmg = round(A.getDmg() * 1.1);
-    int expectedHp = round(A.getHp() * 1.1);
+    int expectedDmg = round(A.getDamage() * 1.1);
+    int expectedHp = round(A.getHealthPoints() * 1.1);
 
-    A.fight(B);
+    A.fightTilDeath(B);
 
-    ASSERT_EQ(A.getDmg(), expectedDmg);
-    ASSERT_EQ(A.getHp(), expectedHp);
+    ASSERT_EQ(A.getDamage(), expectedDmg);
+    ASSERT_EQ(A.getHealthPoints(), expectedHp);
 }
 
 TEST(unitTests, test_getters)
 {
-    Monster A = Monster::parseUnit("../units/unit_1.json");
+    Monster A = Monster::parse("../units/unit_1.json");
 
     ASSERT_EQ(A.getName(), "Maple");
-    ASSERT_EQ(A.getHp(), 200);
-    ASSERT_EQ(A.getDmg(), 60);
-    ASSERT_EQ(A.getCd(), 2);
-    ASSERT_EQ(A.getLvl(), 1);
+    ASSERT_EQ(A.getHealthPoints(), 200);
+    ASSERT_EQ(A.getDamage(), 60);
+    ASSERT_EQ(A.getAttackCoolDown(), 2);
+    ASSERT_EQ(A.getLevel(), 1);
 }
 
 int main(int argc, char **argv)
