@@ -34,7 +34,6 @@ run_unit_tests:
 io-diff-tests:
 	chmod +x run_test.sh
 	./run_test.sh game results.txt
-	diff test/results.txt test/expected_results.txt
 
 documentation:
 	doxygen doxconf
