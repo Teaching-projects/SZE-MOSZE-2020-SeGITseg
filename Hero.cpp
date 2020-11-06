@@ -2,7 +2,7 @@
 #include "JSON.h"
 #include <iostream>
 
-Hero::Hero(const std::string &name, int hp, int dmg, double cd, const float XpPerLevel, const float HpBonusPerLevel, const float DamageBonusPerLevel, const float CdMultiplierPerLevel)
+Hero::Hero(const std::string &name, int hp, int dmg, double cd, const double XpPerLevel, const double HpBonusPerLevel, const double DamageBonusPerLevel, const double CdMultiplierPerLevel)
     : Monster{name, hp, dmg, cd}, maxHP(hp), xp(0), lvl(1), XpPerLevel(XpPerLevel), HpBonusPerLevel(HpBonusPerLevel), DamageBonusPerLevel(DamageBonusPerLevel), CdMultiplierPerLevel(CdMultiplierPerLevel) {}
 
 void Hero::addXp(const int &dmg)
@@ -21,7 +21,7 @@ void Hero::lvlUp()
     maxHP += HpBonusPerLevel;
     hp = maxHP;
     cd *= CdMultiplierPerLevel;
-    dmg += HpBonusPerLevel;
+    dmg += DamageBonusPerLevel;
 }
 
 int Hero::attack(Monster &target)
@@ -56,8 +56,8 @@ Hero Hero::parse(const std::string &fileName)
         data.get<int>("base_health_points"),
         data.get<int>("base_damage"),
         data.get<double>("base_attack_cooldown"),
-        data.get<float>("experience_per_level"),
-        data.get<float>("health_point_bonus_per_level"),
-        data.get<float>("damage_bonus_per_level"),
-        data.get<float>("cooldown_multiplier_per_level"));
+        data.get<double>("experience_per_level"),
+        data.get<double>("health_point_bonus_per_level"),
+        data.get<double>("damage_bonus_per_level"),
+        data.get<double>("cooldown_multiplier_per_level"));
 }

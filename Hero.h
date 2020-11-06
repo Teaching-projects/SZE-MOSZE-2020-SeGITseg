@@ -9,14 +9,14 @@ private:
     int maxHP;				///< The maximal health points of the unit.
     int xp;					///< The xp of the unit.
     int lvl;				///< The level of the unit.
-    const float XpPerLevel; ///< Experience per level.
-    const float HpBonusPerLevel; ///< Health point bonus per level
-    const float DamageBonusPerLevel;///< Damage bonus per level.
-    const float CdMultiplierPerLevel; ///< Cooldown mulitplier per level.
+    const double XpPerLevel; ///< Experience per level.
+    const double HpBonusPerLevel; ///< Health point bonus per level
+    const double DamageBonusPerLevel;///< Damage bonus per level.
+    const double CdMultiplierPerLevel; ///< Cooldown mulitplier per level.
 
 public:
     /// This is the constructor for the Hero class.
-    Hero(const std::string& name, int hp, int dmg, double cd, const float XpPerLevel, const float HpBonusPerLevel, const float DamageBonusPerLevel, const float CdMultiplierPerLevel /** [in] The name, health, damage, attackcooldown, xp per level, hp bonus per level, damagebonus per level and the cooldown multiplier of the hero. */);
+    Hero(const std::string& name, int hp, int dmg, double cd, const double XpPerLevel, const double HpBonusPerLevel, const double DamageBonusPerLevel, const double CdMultiplierPerLevel /** [in] The name, health, damage, attackcooldown, xp per level, hp bonus per level, damagebonus per level and the cooldown multiplier of the hero. */);
 
     /**
      *  \brief This is a simple getter function for max health points.
