@@ -67,6 +67,8 @@ jsonMap JSON::parsetoMap(const std::string &json)
               value.find(".") == std::string::npos ? mappedData[key] = stoi(value) : mappedData[key] = stod(value);
             }
             else {
+                value.erase(0, 1);
+                value.erase(value.size() - 1);
                 mappedData[key] = value;
             }
         }
