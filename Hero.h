@@ -14,10 +14,9 @@ private:
     const float DamageBonusPerLevel;///< Damage bonus per level.
     const float CdMultiplierPerLevel; ///< Cooldown mulitplier per level.
 
-    void lvlUp(); ///< Function to level up the unit.
-
 public:
-    Hero(const std::string& name, int hp, int dmg, double cd, const float XpPerLevel, const float HpBonusPerLevel,  const float DamageBonusPerLevel, const float CdMultiplierPerLevel /** [in] The name, health, damage and cooldown of the unit. */);
+    /// This is the constructor for the Hero class.
+    Hero(const std::string& name, int hp, int dmg, double cd, const float XpPerLevel, const float HpBonusPerLevel, const float DamageBonusPerLevel, const float CdMultiplierPerLevel /** [in] The name, health, damage, attackcooldown, xp per level, hp bonus per level, damagebonus per level and the cooldown multiplier of the hero. */);
 
     /**
      *  \brief This is a simple getter function for max health points.
@@ -40,12 +39,18 @@ public:
    */
     int getXp() const;
 
-	/// This function adds xp to the unit when doing damage.
-	void addXp(const int& dmg /** [in] The damage param. */);
+    /// This function adds xp to the unit when doing damage.
+    void addXp(const int& dmg /** [in] The damage param. */);
 
-    virtual int attack(Monster & target);
+    void lvlUp(); ///< Function to level up the unit.
 
-    static Hero parse(const std::string& fileName);
+    virtual int attack(Monster& target /** [in] The target param. */);
+
+    /**
+     *  \brief  This function inputs the units from files.
+     *  \return It returns the unit name, hp, damage and cooldown.
+    */
+    static Hero parse(const std::string& fileName /** [in] The name of the input file. */);
 
 };
 

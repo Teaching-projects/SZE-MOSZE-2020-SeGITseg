@@ -28,7 +28,7 @@ protected:
 	double cd;		///< The attack cooldown of the unit (in seconds).
 
 public:
-	/// This is the constructor for the Unit class.
+	/// This is the constructor for the Monster class.
 	Monster(const std::string& name, int hp, int dmg, double cd /** [in] The name, health, damage and cooldown of the unit. */);
 
 	/**
@@ -61,13 +61,15 @@ public:
 
 	/**
 	 *  \brief This shows if the unit is alive or not (hp>0).
+	 *	\param none
 	 *  \return It returns true or false.
 	*/
 	bool isAlive() const;
 
 	/// This function does a single attack against a target unit.
-	virtual void attack(Monster& target /** [in] The target param. */);
+	virtual int attack(Monster& target /** [in] The target param. */);
 
+	/// This function fights the units until one of them dies.
 	void fightTilDeath(Monster& other /** [in] The opponent param. */);
 
 	/**
@@ -75,11 +77,6 @@ public:
 	 *  \return It returns the unit name, hp, damage and cooldown.
 	*/
 	static Monster parse(const std::string& fileName /** [in] The name of the input file. */);
-
-	/**
-	 *  \brief This is an output operator, used to output the unit's attributes.
-	 *  \return It returns every important information about the unit (name, hp, dmg, cd).
-	*/
 };
 
 #endif

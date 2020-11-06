@@ -26,9 +26,10 @@ void Hero::lvlUp()
 
 int Hero::attack(Monster& target)
 {
-    int damagePerRound = Monster::attack(target);
-    addXp(damagePerRound);
-    return damagePerRound;
+    int dmgPerRound = 0;
+    dmgPerRound = Monster::attack(target);
+    addXp(dmgPerRound);
+    return dmgPerRound;
 }
 
 int Hero::getLevel() const

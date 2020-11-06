@@ -26,15 +26,15 @@ double Monster::getAttackCoolDown() const
 
 int Monster::attack(Monster& target)
 {
-	int damagePerRound=0;
+	int damagePerRound = 0;
 	if (target.getHealthPoints() - dmg > 0)
 	{
 		target.hp -= dmg;
-		damagePerRound=dmg;
+		damagePerRound = dmg;
 	}
 	else
 	{
-		damagePerRound=target.getHealthPoints();
+		damagePerRound = target.getHealthPoints();
 		target.hp = 0;
 	}
 	return damagePerRound;
