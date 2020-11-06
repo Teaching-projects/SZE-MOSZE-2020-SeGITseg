@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <regex>
 
 bool JSON::isNumeric(const std::string &str)
 {
@@ -21,54 +22,14 @@ bool JSON::isNumeric(const std::string &str)
     return chr == str.size();
 }
 
-std::string JSON::getData(const std::string &line)
-{
-    int firstNonSpace = line.find_first_not_of(' ');
-    int lastNonSpace = line.find_last_not_of(' ');
-
-    if (line.at(firstNonSpace) == '\"' && line.at(lastNonSpace) == '\"') {
-        return line.substr(firstNonSpace + 1, lastNonSpace - (firstNonSpace + 1));
-    }
-    else if (line.at(firstNonSpace) != '\"' && line.at(lastNonSpace) != '\"') {
-        std::string data = line.substr(firstNonSpace, lastNonSpace - firstNonSpace + 1);
-        if (!isNumeric(data)) {
-            throw JSON::ParseException("Invalid data type: " + data);
-        }
-        return data;
-    }
-
-    throw JSON::ParseException("Invalid data format: " + line);
-}
-
 JSON JSON::parseFromStream(std::istream &inputStream)
 {
-    jsonMap parsedData;
-    std::string line;
+  std::string fileContent = "", currentLine;
+  while(std::getline(inputStream, currentLine)){
+    fileContent += currentLine;
+  }
 
-    while (std::getline(inputStream, line)) {
-        if (line.find(":") != std::string::npos) {
-            if (line.back() == ',') { line.pop_back(); }
-
-            std::string key = getData(line.substr(0, line.find(":")));
-
-            std::string value = getData(line.substr(line.find(":") + 1));
-
-            std::variant<std::string, int, double> valueVariant;
-            if (!isNumeric(value)) {
-                valueVariant = value;
-            }
-            else if (value.find_first_of('.') != std::string::npos) {
-                valueVariant = stod(value);
-            }
-            else {
-                valueVariant = stoi(value);
-            }
-
-            parsedData.insert(std::pair<std::string, std::variant<std::string, int, double>>(key, valueVariant));
-        }
-    }
-
-    return JSON(parsedData);
+  return JSON(parsetoMap(fileContent));
 }
 
 JSON JSON::parseFromString(const std::string &inputString)
@@ -86,4 +47,30 @@ JSON JSON::parseFromFile(const std::string &fileName)
     }
 
     throw JSON::ParseException("Error while opening file: " + fileName);
+}
+
+jsonMap JSON::parsetoMap(const std::string &json)
+{
+    jsonMap mappedData;
+    std::string worker = json, key, value;
+    const std::regex JSONregex("\\s*\"([a-zA-Z0-9_]*)\"\\s*:\\s*(\"[a-zA-Z0-9_]*\"|\\d+.\\d+|\\d+)\\s*[,}]\\s*");
+    std::smatch matches;
+
+    while (std::regex_search(worker, matches, JSONregex))
+    {
+        if (matches.size() == 3)
+        {
+            key = matches[1].str();
+            value = matches[2].str();
+
+            if (isNumeric(value)) {
+              value.find(".") == std::string::npos ? mappedData[key] = stoi(value) : mappedData[key] = stod(value);
+            }
+            else {
+                mappedData[key] = value;
+            }
+        }
+        worker = matches.suffix();
+    }
+    return mappedData;
 }
