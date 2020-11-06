@@ -10,10 +10,10 @@ TEST(unitTests, test_iStream)
     std::ifstream iStream("../units/unit_2.json");
     JSON data = JSON::parseFromStream(iStream);
 
-    ASSERT_TRUE(data.get<std::string>("name") == "Sally");
-    ASSERT_TRUE(data.get<int>("hp") == 140);
-    ASSERT_TRUE(data.get<int>("dmg") == 30);
-    ASSERT_TRUE(data.get<double>("cd") == 1.5);
+    ASSERT_EQ(data.get<std::string>("name"), "Sally");
+    ASSERT_EQ(data.get<int>("hp"), 140);
+    ASSERT_EQ(data.get<int>("dmg"), 30);
+    ASSERT_EQ(data.get<double>("cd"), 1.5);
 }
 
 TEST(unitTests, test_iString)
@@ -21,10 +21,10 @@ TEST(unitTests, test_iString)
     std::string iString = "../units/unit_1.json";
     JSON data = JSON::parseFromFile(iString);
 
-    ASSERT_TRUE(data.get<std::string>("name") == "Maple");
-    ASSERT_TRUE(data.get<int>("hp") == 200);
-    ASSERT_TRUE(data.get<int>("dmg") == 60);
-    ASSERT_TRUE(data.get<double>("cd") == 2);
+    ASSERT_EQ(data.get<std::string>("name"), "Maple");
+    ASSERT_EQ(data.get<int>("hp"), 200);
+    ASSERT_EQ(data.get<int>("dmg"), 60);
+    ASSERT_EQ(data.get<double>("cd"), 2);
 }
 
 TEST(unitTests, test_whitespaces)
@@ -32,10 +32,10 @@ TEST(unitTests, test_whitespaces)
     std::string fileName = "../units/test_units/valid_unit_1.json";
     JSON data = JSON::parseFromFile(fileName);
 
-    ASSERT_TRUE(data.get<std::string>("name") == "Valid Unit #1");
-    ASSERT_TRUE(data.get<int>("hp") == 100);
-    ASSERT_TRUE(data.get<int>("dmg") == 20);
-    ASSERT_TRUE(data.get<double>("cd") == 1);
+    ASSERT_EQ(data.get<std::string>("name"), "Valid Unit");
+    ASSERT_EQ(data.get<int>("hp"), 100);
+    ASSERT_EQ(data.get<int>("dmg"), 20);
+    ASSERT_EQ(data.get<double>("cd"), 1);
 }
 
 TEST(unitTests, test_changedJSONorder)
@@ -43,10 +43,10 @@ TEST(unitTests, test_changedJSONorder)
     std::string fileName = "../units/test_units/valid_unit_2.json";
     JSON data = JSON::parseFromFile(fileName);
 
-    ASSERT_TRUE(data.get<std::string>("name") == "Valid Unit #2");
-    ASSERT_TRUE(data.get<int>("hp") == 100);
-    ASSERT_TRUE(data.get<int>("dmg") == 20);
-    ASSERT_TRUE(data.get<double>("cd") == 1);
+    ASSERT_EQ(data.get<std::string>("name"), "Valid Unit");
+    ASSERT_EQ(data.get<int>("hp"), 100);
+    ASSERT_EQ(data.get<int>("dmg"), 20);
+    ASSERT_EQ(data.get<double>("cd"), 1);
 }
 
 TEST(unitTests, test_invalidDataFormat)
