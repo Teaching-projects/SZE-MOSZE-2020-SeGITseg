@@ -6,13 +6,47 @@
 class Hero : public Monster
 {
 private:
-    float XpPerLevel;
-    float DamageBonusPerLevel;
-    float HpBonusPerLevel;
-    float CdMultiplierPerLevel;
+    int maxHP;				///< The maximal health points of the unit.
+    int xp;					///< The xp of the unit.
+    int lvl;				///< The level of the unit.
+    const float XpPerLevel;
+    const float DamageBonusPerLevel;
+    const float HpBonusPerLevel;
+    const float CdMultiplierPerLevel;
+
+    void lvlUp(); ///< Function to level up the unit.
+
 public:
-    Hero();
-    static Hero parse(const std::string&);
+    Hero(const std::string& name, int hp, int dmg, double cd, const float XpPerLevel, const float HpBonusPerLevel,  const float DamageBonusPerLevel, const float CdMultiplierPerLevel /** [in] The name, health, damage and cooldown of the unit. */);
+
+    /**
+     *  \brief This is a simple getter function for max health points.
+     * 	\param none
+     *  \return Returns the unit's max health.
+    */
+    int getMaxHealthPoints() const;
+
+    /**
+     *  \brief This is a simple getter function for unit level.
+     * 	\param none
+     *  \return Returns the unit's level.
+    */
+    int getLevel() const;
+
+    /**
+    *  \brief This is a simple getter function for unit xp.
+    * 	\param none
+    *  \return Returns the unit's xp.
+   */
+    int getXp() const;
+
+	/// This function adds xp to the unit when doing damage.
+	void addXp(const int& dmg /** [in] The damage param. */);
+
+    void attack(Monster & target);
+
+    static Hero parse(const std::string& fileName);
+
 };
 
 #endif

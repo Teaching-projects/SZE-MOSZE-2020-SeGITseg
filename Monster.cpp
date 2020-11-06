@@ -1,9 +1,8 @@
 #include "Monster.h"
 #include "JSON.h"
-#include <cmath>
 
-Monster::Monster(const std::string& name, int hp, int dmg, const double& cd)
-	: name(name), hp(hp), dmg(dmg), cd(cd), maxHP(hp), xp(0), lvl(1) {}
+Monster::Monster(const std::string& name, int hp, int dmg, double cd)
+	: name(name), hp(hp), dmg(dmg), cd(cd) {}
 
 std::string Monster::getName() const
 {
@@ -13,11 +12,6 @@ std::string Monster::getName() const
 int Monster::getHealthPoints() const
 {
 	return hp;
-}
-
-int Monster::getMaxHealthPoints() const
-{
-	return maxHP;
 }
 
 int Monster::getDamage() const
@@ -30,54 +24,32 @@ double Monster::getAttackCoolDown() const
 	return cd;
 }
 
-int Monster::getLevel() const
+int Monster::attack(Monster& target)
 {
-	return lvl;
-}
-
-void Monster::attack(Monster& target)
-{
+	int damagePerRound=0;
 	if (target.getHealthPoints() - dmg > 0)
 	{
 		target.hp -= dmg;
-		addXp(dmg);
+		damagePerRound=dmg;
 	}
 	else
 	{
-		int tmpHp = target.hp;
+		damagePerRound=target.getHealthPoints();
 		target.hp = 0;
-		addXp(tmpHp);
 	}
+	return damagePerRound;
 }
 
-void Monster::addXp(const int& dmg)
-{
-	xp += dmg;
-	while (xp >= 100)
-	{
-		lvlUp();
-		xp -= 100;
-	}
-}
-
-void Monster::lvlUp()
-{
-	lvl++;
-	maxHP = round(maxHP * 1.1);
-	hp = maxHP;
-	dmg = round(dmg * 1.1);
-}
-
-Monster* Monster::fightTilDeath(Monster& other)
+void Monster::fightTilDeath(Monster& other)
 {
 	attack(other);
-	if (other.getHealthPoints() > 0)
+	if (other.isAlive())
 		other.attack(*this);
 
 	double timeA = cd;
 	double timeB = other.getAttackCoolDown();
 
-	while (hp > 0 && other.getHealthPoints() > 0)
+	while (this->isAlive() && other.isAlive())
 	{
 		if (timeA <= timeB)
 		{
@@ -90,20 +62,11 @@ Monster* Monster::fightTilDeath(Monster& other)
 			timeB += other.getAttackCoolDown();
 		}
 	}
-
-	if (hp == 0)
-	{
-		return &other;
-	}
-	else
-	{
-		return this;
-	}
 }
 
 bool Monster::isAlive() const
 {
-	if (hp>0)
+	if (hp > 0)
 	{
 		return true;
 	}
@@ -132,9 +95,4 @@ Monster Monster::parse(const std::string& fileName)
 	}
 
 	return Monster(name, hp, dmg, cd);
-}
-
-std::ostream& operator<<(std::ostream& out, const Monster& u)
-{
-	return out << u.getName() << ": HP: " << u.getHealthPoints() << ", DMG: " << u.getDamage() << ", CD: " << u.getAttackCoolDown() << "\n";
 }
