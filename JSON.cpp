@@ -24,9 +24,9 @@ bool JSON::isNumeric(const std::string &str)
 
 JSON JSON::parseFromStream(std::istream &inputStream)
 {
-  std::string fileContent = "", currentLine;
+  std::string fileContent, currentLine;
   while(std::getline(inputStream, currentLine)){
-    fileContent += currentLine;
+    fileContent.append(currentLine);
   }
 
   return JSON(parsetoMap(fileContent));
@@ -42,11 +42,11 @@ JSON JSON::parseFromFile(const std::string &fileName)
 {
     std::ifstream fileStream(fileName);
 
-    if (fileStream.good() && fileStream.is_open()) {
-        return parseFromStream(fileStream);
+    if (!fileStream.good()) {
+        throw JSON::ParseException("Error while opening file: " + fileName);
     }
 
-    throw JSON::ParseException("Error while opening file: " + fileName);
+    return parseFromStream(fileStream);
 }
 
 jsonMap JSON::parsetoMap(const std::string &json)
