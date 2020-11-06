@@ -29,31 +29,14 @@ JSON JSON::parseFromStream(std::istream &inputStream)
     fileContent.append(currentLine);
   }
 
-  return JSON(parsetoMap(fileContent));
+  return parseFromString(fileContent);
 }
 
 JSON JSON::parseFromString(const std::string &inputString)
 {
-    std::istringstream stringStream(inputString);
-    return parseFromStream(stringStream);
-}
-
-JSON JSON::parseFromFile(const std::string &fileName)
-{
-    std::ifstream fileStream(fileName);
-
-    if (!fileStream.good()) {
-        throw JSON::ParseException("Error while opening file: " + fileName);
-    }
-
-    return parseFromStream(fileStream);
-}
-
-jsonMap JSON::parsetoMap(const std::string &json)
-{
     jsonMap mappedData;
-    std::string worker = json, key, value;
-    const std::regex JSONregex("\\s*\"([\\w]*)\"\\s*:\\s*\"?([\\s\\w\\.]*)\"?\\s*[,}]\\s*");
+    std::string worker = inputString, key, value;
+    const std::regex JSONregex("\\s*\"([\\w]*)\"\\s*:\\s*(\"[^\"]+\"|\\d+.\\d+|\\d+)\\s*[,}]\\s*");
     std::smatch matches;
 
     while (std::regex_search(worker, matches, JSONregex))
@@ -74,5 +57,16 @@ jsonMap JSON::parsetoMap(const std::string &json)
         }
         worker = matches.suffix();
     }
-    return mappedData;
+    return JSON(mappedData);
+}
+
+JSON JSON::parseFromFile(const std::string &fileName)
+{
+    std::ifstream fileStream(fileName);
+
+    if (!fileStream.good()) {
+        throw JSON::ParseException("Error while opening file: " + fileName);
+    }
+
+    return parseFromStream(fileStream);
 }

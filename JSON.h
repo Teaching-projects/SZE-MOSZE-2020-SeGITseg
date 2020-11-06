@@ -28,7 +28,6 @@ class JSON
 private:
 	jsonMap data;
 	static bool isNumeric(const std::string& input);
-	static jsonMap parsetoMap(const std::string &json);
 
 public:
 	JSON(jsonMap d) : data(d) {}
