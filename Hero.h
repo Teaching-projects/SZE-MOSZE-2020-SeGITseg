@@ -9,10 +9,10 @@ private:
     int maxHP;				///< The maximal health points of the unit.
     int xp;					///< The xp of the unit.
     int lvl;				///< The level of the unit.
-    const float XpPerLevel;
-    const float DamageBonusPerLevel;
-    const float HpBonusPerLevel;
-    const float CdMultiplierPerLevel;
+    const float XpPerLevel; ///< Experience per level.
+    const float HpBonusPerLevel; ///< Health point bonus per level
+    const float DamageBonusPerLevel;///< Damage bonus per level.
+    const float CdMultiplierPerLevel; ///< Cooldown mulitplier per level.
 
     void lvlUp(); ///< Function to level up the unit.
 
@@ -43,7 +43,7 @@ public:
 	/// This function adds xp to the unit when doing damage.
 	void addXp(const int& dmg /** [in] The damage param. */);
 
-    void attack(Monster & target);
+    virtual int attack(Monster & target);
 
     static Hero parse(const std::string& fileName);
 
