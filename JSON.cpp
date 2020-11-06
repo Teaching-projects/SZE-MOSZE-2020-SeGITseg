@@ -42,7 +42,7 @@ std::string JSON::getData(const std::string &line)
 
 JSON JSON::parseFromStream(std::istream &inputStream)
 {
-    std::map<std::string, std::variant<std::string, int, float>> parsedData;
+    jsonMap parsedData;
     std::string line;
 
     while (std::getline(inputStream, line)) {
@@ -53,18 +53,18 @@ JSON JSON::parseFromStream(std::istream &inputStream)
 
             std::string value = getData(line.substr(line.find(":") + 1));
 
-            std::variant<std::string, int, float> valueVariant;
+            std::variant<std::string, int, double> valueVariant;
             if (!isNumeric(value)) {
                 valueVariant = value;
             }
             else if (value.find_first_of('.') != std::string::npos) {
-                valueVariant = stof(value);
+                valueVariant = stod(value);
             }
             else {
                 valueVariant = stoi(value);
             }
 
-            parsedData.insert(std::pair<std::string, std::variant<std::string, int, float>>(key, valueVariant));
+            parsedData.insert(std::pair<std::string, std::variant<std::string, int, double>>(key, valueVariant));
         }
     }
 

@@ -21,15 +21,17 @@
 #include <istream>
 #include <algorithm>
 
+using jsonMap = std::map<std::string, std::variant<std::string, int, double>>;
+
 class JSON
 {
 private:
-	std::map<std::string, std::variant<std::string, int, float>> data;
+	jsonMap data;
 	static bool isNumeric(const std::string& input);
 	static std::string getData(const std::string& line);
 
 public:
-	JSON(std::map<std::string, std::variant<std::string, int, float>> d) : data(d) {}
+	JSON(jsonMap d) : data(d) {}
 	/**
 	 *  \brief This is the function to parse JSON from an input stream.
 	 *  \return Returns the parsed JSON in a map.

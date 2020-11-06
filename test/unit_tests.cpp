@@ -8,65 +8,45 @@
 TEST(unitTests, test_iStream)
 {
     std::ifstream iStream("../units/unit_2.json");
-    std::map<std::string, std::variant<std::string, int, double>> expectedData{
-        {"name", "Sally"},
-        {"hp", 140},
-        {"dmg", 30},
-        {"cd", 1.5}};
     JSON data = JSON::parseFromStream(iStream);
 
-    ASSERT_EQ(data.get<std::string>("name"), expectedData["name"]);
-    ASSERT_EQ(data.get<int>("hp"), expectedData["hp"]);
-    ASSERT_EQ(data.get<int>("dmg"), expectedData["dmg"]);
-    ASSERT_EQ(data.get<double>("cd"), expectedData["cd"]);
+    ASSERT_TRUE(data.get<std::string>("name") == "Sally");
+    ASSERT_TRUE(data.get<int>("hp") == 140);
+    ASSERT_TRUE(data.get<int>("dmg") == 30);
+    ASSERT_TRUE(data.get<double>("cd") == 1.5);
 }
 
 TEST(unitTests, test_iString)
 {
     std::string iString = "../units/unit_1.json";
-    std::map<std::string, std::variant<std::string, int, double>> expectedData{
-        {"name", "Maple"},
-        {"hp", 200},
-        {"dmg", 60},
-        {"cd", 2}};
     JSON data = JSON::parseFromFile(iString);
 
-    ASSERT_EQ(data.get<std::string>("name"), expectedData["name"]);
-    ASSERT_EQ(data.get<int>("hp"), expectedData["hp"]);
-    ASSERT_EQ(data.get<int>("dmg"), expectedData["dmg"]);
-    ASSERT_EQ(data.get<double>("cd"), expectedData["cd"]);
+    ASSERT_TRUE(data.get<std::string>("name") == "Maple");
+    ASSERT_TRUE(data.get<int>("hp") == 200);
+    ASSERT_TRUE(data.get<int>("dmg") == 60);
+    ASSERT_TRUE(data.get<double>("cd") == 2);
 }
 
 TEST(unitTests, test_whitespaces)
 {
     std::string fileName = "../units/test_units/valid_unit_1.json";
-    std::map<std::string, std::variant<std::string, int, double>> expectedData{
-        {"name", "Valid Unit #1"},
-        {"hp", 100},
-        {"dmg", 20},
-        {"cd", 1}};
     JSON data = JSON::parseFromFile(fileName);
 
-    ASSERT_EQ(data.get<std::string>("name"), expectedData["name"]);
-    ASSERT_EQ(data.get<int>("hp"), expectedData["hp"]);
-    ASSERT_EQ(data.get<int>("dmg"), expectedData["dmg"]);
-    ASSERT_EQ(data.get<double>("cd"), expectedData["cd"]);
+    ASSERT_TRUE(data.get<std::string>("name") == "Valid Unit #1");
+    ASSERT_TRUE(data.get<int>("hp") == 100);
+    ASSERT_TRUE(data.get<int>("dmg") == 20);
+    ASSERT_TRUE(data.get<double>("cd") == 1);
 }
 
 TEST(unitTests, test_changedJSONorder)
 {
     std::string fileName = "../units/test_units/valid_unit_2.json";
-    std::map<std::string, std::variant<std::string, int, double>> expectedData{
-        {"name", "Valid Unit #2"},
-        {"hp", 100},
-        {"dmg", 20},
-        {"cd", 1}};
     JSON data = JSON::parseFromFile(fileName);
 
-    ASSERT_EQ(data.get<std::string>("name"), expectedData["name"]);
-    ASSERT_EQ(data.get<int>("hp"), expectedData["hp"]);
-    ASSERT_EQ(data.get<int>("dmg"), expectedData["dmg"]);
-    ASSERT_EQ(data.get<double>("cd"), expectedData["cd"]);
+    ASSERT_TRUE(data.get<std::string>("name") == "Valid Unit #2");
+    ASSERT_TRUE(data.get<int>("hp") == 100);
+    ASSERT_TRUE(data.get<int>("dmg") == 20);
+    ASSERT_TRUE(data.get<double>("cd") == 1);
 }
 
 TEST(unitTests, test_invalidDataFormat)
