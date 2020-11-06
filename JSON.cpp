@@ -53,7 +53,7 @@ jsonMap JSON::parsetoMap(const std::string &json)
 {
     jsonMap mappedData;
     std::string worker = json, key, value;
-    const std::regex JSONregex("\\s*\"([a-zA-Z0-9_]*)\"\\s*:\\s*(\"[a-zA-Z0-9_]*\"|\\d+.\\d+|\\d+)\\s*[,}]\\s*");
+    const std::regex JSONregex("\\s*\"([a-zA-Z0-9_]*)\"\\s*:\\s*(\"[^\"]+\"|\\d+.\\d+|\\d+)\\s*[,}]\\s*");
     std::smatch matches;
 
     while (std::regex_search(worker, matches, JSONregex))
