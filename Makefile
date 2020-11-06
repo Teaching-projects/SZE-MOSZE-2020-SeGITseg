@@ -14,7 +14,7 @@ Hero.o: Hero.cpp Hero.h Monster.h JSON.h
 Monster.o: Monster.cpp Monster.h JSON.h
 	$(CC) $(CFLAGS) -c Monster.cpp
 
-jsonparser.o: JSON.cpp JSON.h
+JSON.o: JSON.cpp JSON.h
 	$(CC) $(CFLAGS) -c JSON.cpp
 
 static-code-analysis:
