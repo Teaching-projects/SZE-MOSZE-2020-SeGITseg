@@ -35,28 +35,33 @@ JSON JSON::parseFromStream(std::istream &inputStream)
 JSON JSON::parseFromString(const std::string &inputString)
 {
     jsonMap mappedData;
-    std::string worker = inputString, key, value;
-    const std::regex JSONregex("\\s*\"([\\w]*)\"\\s*:\\s*(\"[^\"]+\"|\\d+.\\d+|\\d+)\\s*[,}]\\s*");
+    std::string worker = inputString;
+    const std::regex JSONregex("\\s*\"([a-z_]*)\"\\s*:\\s*([0-9]*\\.?[0-9]+|\"[\\w\\s\\./]+\")\\s*([,}])\\s*");
     std::smatch matches;
-
+    
     while (std::regex_search(worker, matches, JSONregex))
     {
-        if (matches.size() == 3)
+        if (matches.size() == 4)
         {
-            key = matches[1].str();
-            key.erase(std::remove(key.begin(), key.end(), '\"'), key.end());
-            value = matches[2].str();
-            value.erase(std::remove(value.begin(), value.end(), '\"'), value.end());
-
-            if (isNumeric(value)) {
-              value.find(".") == std::string::npos ? mappedData[key] = stoi(value) : mappedData[key] = stod(value);
+            std::string value = matches[2].str();
+            if (value.at(0) == '"')
+            {
+                value.erase(value.begin());
+                value.erase(value.end() - 1);
+                mappedData[matches[1]] = value;
             }
-            else {
-                mappedData[key] = value;
+            else if (value.find_first_of('.') != std::string::npos)
+            {
+                mappedData[matches[1]] = stof(value);
+            }
+            else
+            {
+                mappedData[matches[1]] = stoi(value);
             }
         }
         worker = matches.suffix();
     }
+
     return JSON(mappedData);
 }
 
